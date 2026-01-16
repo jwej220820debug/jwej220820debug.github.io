@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>성적 분석 대시보드 (Grade Analysis Dashboard)</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>성적 분석 리포트</h1>
+            <p>Grade Analysis Dashboard & Visualization</p>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <!-- Key Metrics -->
+        <section id="metrics">
+            <h2 class="section-title">📊 핵심 지표 (Key Metrics)</h2>
+            <div class="stats-grid" id="stats-container">
+                <!-- Javascript will populate this -->
+            </div>
+        </section>
+
+        <!-- Visualizations -->
+        <section id="visualizations">
+            <h2 class="section-title">📈 데이터 시각화 (Data Visualization)</h2>
+            <div class="gallery-grid">
+                <div class="image-card">
+                    <img src="06_grade_histogram.png" alt="총점 분포 히스토그램">
+                    <div class="caption">총점 분포 (Score Distribution)</div>
+                </div>
+                <div class="image-card">
+                    <img src="06_mid_vs_final.png" alt="중간/기말 상관관계">
+                    <div class="caption">중간 vs 기말 (Mid/Final Correlation)</div>
+                </div>
+                <div class="image-card">
+                    <img src="06_score_boxplot.png" alt="항목별 점수 분포">
+                    <div class="caption">항목별 점수 분포 (Boxplot)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Top Students -->
+        <section id="top-students">
+            <h2 class="section-title">🏆 성적 우수자 (Top Performer)</h2>
+            <div class="table-container">
+                <table id="top-students-table">
+                    <thead>
+                        <tr>
+                            <th>순위 (Rank)</th>
+                            <th>이름 (Name)</th>
+                            <th>총점 (Total Score)</th>
+                            <th>등급 (Grade)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Javascript will populate this -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Full Data Table (Foldable or Scrollable) -->
+        <section id="full-data">
+            <h2 class="section-title">📋 전체 데이터 (Full Dataset)</h2>
+            <div class="table-container" style="max-height: 400px; overflow-y: auto;">
+                <table id="full-data-table">
+                    <thead>
+                        <tr>
+                            <th>이름</th>
+                            <th>중간 (30%)</th>
+                            <th>기말 (30%)</th>
+                            <th>수행1 (20%)</th>
+                            <th>수행2 (20%)</th>
+                            <th>총점</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Javascript will populate this -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Raw CSV Data Injection
+        const csvData = `이름,중간고사(30%),기말고사(30%),수행평가1(20%),수행평가2(20%),총점
+학생1,99,81,78,76,84.8
+학생2,53,53,77,74,62.0
+학생3,99,92,94,92,94.5
+학생4,54,91,77,95,77.9
+학생5,64,92,88,94,83.2
+학생6,40,42,85,77,57.0
+학생7,63,83,89,64,74.4
+학생8,54,100,66,62,71.8
+학생9,61,61,95,74,70.4
+학생10,64,41,97,71,65.1
+학생11,72,93,90,82,83.9
+학생12,73,57,80,61,67.2
+학생13,43,55,61,70,55.6
+학생14,91,73,92,84,84.4
+학생15,57,69,79,69,67.4
+학생16,61,78,62,82,70.5
+학생17,74,78,93,68,77.8
+학생18,84,94,97,100,92.8
+학생19,71,89,97,88,85.0
+학생20,54,83,67,98,74.1
+학생21,70,70,100,85,79.0
+학생22,94,80,91,85,87.4
+학생23,45,72,76,84,67.1
+학생24,82,46,80,91,72.6
+학생25,77,43,90,100,74.0
+학생26,68,40,67,74,60.6
+학생27,86,91,78,67,82.1
+학생28,70,51,79,74,66.9
+학생29,67,80,70,89,75.9
+학생30,51,92,92,95,80.3`;
+
+        // Parse CSV
+        function parseCSV(csv) {
+            const lines = csv.trim().split('\\n');
+            const headers = lines[0].split(',');
+            // Mapping headers to simpler keys
+            const keyMap = {
+                '이름': 'name',
+                '중간고사(30%)': 'midterm',
+                '기말고사(30%)': 'final',
+                '수행평가1(20%)': 'perf1',
+                '수행평가2(20%)': 'perf2',
+                '총점': 'total'
+            };
+            
+            return lines.slice(1).map(line => {
+                const values = line.split(',');
+                const obj = {};
+                headers.forEach((header, index) => {
+                    const key = keyMap[header.trim()] || header.trim();
+                    const value = values[index].trim();
+                    // Convert to number if it looks like one
+                    obj[key] = isNaN(value) ? value : parseFloat(value);
+                });
+                return obj;
+            });
+        }
+
+        const data = parseCSV(csvData);
+
+        // 1. Calculate Stats
+        const totalMean = (data.reduce((sum, row) => sum + row.total, 0) / data.length).toFixed(1);
+        const midMean = (data.reduce((sum, row) => sum + row.midterm, 0) / data.length).toFixed(1);
+        const finalMean = (data.reduce((sum, row) => sum + row.final, 0) / data.length).toFixed(1);
+        const studentCount = data.length;
+
+        // Render Stats
+        const statsContainer = document.getElementById('stats-container');
+        const stats = [
+            { label: '전체 학생 수', value: studentCount + '명' },
+            { label: '총점 평균', value: totalMean + '점' },
+            { label: '중간고사 평균', value: midMean + '점' },
+            { label: '기말고사 평균', value: finalMean + '점' }
+        ];
+
+        stats.forEach(stat => {
+            const el = document.createElement('div');
+            el.className = 'stat-card';
+            el.innerHTML = `<h3>${stat.label}</h3><div class="value">${stat.value}</div>`;
+            statsContainer.appendChild(el);
+        });
+
+        // 2. Render Top 5 Students
+        const top5 = [...data].sort((a, b) => b.total - a.total).slice(0, 5);
+        const topTableBody = document.querySelector('#top-students-table tbody');
+        
+        top5.forEach((student, index) => {
+            const tr = document.createElement('tr');
+            let grade = 'A';
+            if (student.total < 90) grade = 'B';
+            if (student.total < 80) grade = 'C'; 
+            if (student.total < 70) grade = 'D';
+            
+            tr.innerHTML = `
+                <td><span class="rank-badge">${index + 1}</span></td>
+                <td><b>${student.name}</b></td>
+                <td>${student.total}</td>
+                <td>${grade}</td>
+            `;
+            topTableBody.appendChild(tr);
+        });
+
+        // 3. Render Full Table
+        const fullTableBody = document.querySelector('#full-data-table tbody');
+        data.forEach(student => {
+             const tr = document.createElement('tr');
+             tr.innerHTML = `
+                <td>${student.name}</td>
+                <td>${student.midterm}</td>
+                <td>${student.final}</td>
+                <td>${student.perf1}</td>
+                <td>${student.perf2}</td>
+                <td><b>${student.total}</b></td>
+             `;
+             fullTableBody.appendChild(tr);
+        });
+
+    </script>
+</body>
+</html>
