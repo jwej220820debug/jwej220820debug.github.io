@@ -1,216 +1,325 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>성적 분석 대시보드 (Grade Analysis Dashboard)</title>
-    <link rel="stylesheet" href="style.css">
+    <title>전기 설비 3차 지필평가 출제원안</title>
+    <meta name="description" content="2024학년도 전기 설비 지필평가 객관식 문항 출제 계획 및 난이도 분석 보고서입니다.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-</head>
-<body>
-
-    <header>
-        <div class="container">
-            <h1>성적 분석 리포트</h1>
-            <p>Grade Analysis Dashboard & Visualization</p>
-        </div>
-    </header>
-
-    <main class="container">
-        
-        <!-- Key Metrics -->
-        <section id="metrics">
-            <h2 class="section-title">📊 핵심 지표 (Key Metrics)</h2>
-            <div class="stats-grid" id="stats-container">
-                <!-- Javascript will populate this -->
-            </div>
-        </section>
-
-        <!-- Visualizations -->
-        <section id="visualizations">
-            <h2 class="section-title">📈 데이터 시각화 (Data Visualization)</h2>
-            <div class="gallery-grid">
-                <div class="image-card">
-                    <img src="06_grade_histogram.png" alt="총점 분포 히스토그램">
-                    <div class="caption">총점 분포 (Score Distribution)</div>
-                </div>
-                <div class="image-card">
-                    <img src="06_mid_vs_final.png" alt="중간/기말 상관관계">
-                    <div class="caption">중간 vs 기말 (Mid/Final Correlation)</div>
-                </div>
-                <div class="image-card">
-                    <img src="06_score_boxplot.png" alt="항목별 점수 분포">
-                    <div class="caption">항목별 점수 분포 (Boxplot)</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Top Students -->
-        <section id="top-students">
-            <h2 class="section-title">🏆 성적 우수자 (Top Performer)</h2>
-            <div class="table-container">
-                <table id="top-students-table">
-                    <thead>
-                        <tr>
-                            <th>순위 (Rank)</th>
-                            <th>이름 (Name)</th>
-                            <th>총점 (Total Score)</th>
-                            <th>등급 (Grade)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Javascript will populate this -->
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- Full Data Table (Foldable or Scrollable) -->
-        <section id="full-data">
-            <h2 class="section-title">📋 전체 데이터 (Full Dataset)</h2>
-            <div class="table-container" style="max-height: 400px; overflow-y: auto;">
-                <table id="full-data-table">
-                    <thead>
-                        <tr>
-                            <th>이름</th>
-                            <th>중간 (30%)</th>
-                            <th>기말 (30%)</th>
-                            <th>수행1 (20%)</th>
-                            <th>수행2 (20%)</th>
-                            <th>총점</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Javascript will populate this -->
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-    </main>
-
-    <script>
-        // Raw CSV Data Injection
-        const csvData = `이름,중간고사(30%),기말고사(30%),수행평가1(20%),수행평가2(20%),총점
-학생1,99,81,78,76,84.8
-학생2,53,53,77,74,62.0
-학생3,99,92,94,92,94.5
-학생4,54,91,77,95,77.9
-학생5,64,92,88,94,83.2
-학생6,40,42,85,77,57.0
-학생7,63,83,89,64,74.4
-학생8,54,100,66,62,71.8
-학생9,61,61,95,74,70.4
-학생10,64,41,97,71,65.1
-학생11,72,93,90,82,83.9
-학생12,73,57,80,61,67.2
-학생13,43,55,61,70,55.6
-학생14,91,73,92,84,84.4
-학생15,57,69,79,69,67.4
-학생16,61,78,62,82,70.5
-학생17,74,78,93,68,77.8
-학생18,84,94,97,100,92.8
-학생19,71,89,97,88,85.0
-학생20,54,83,67,98,74.1
-학생21,70,70,100,85,79.0
-학생22,94,80,91,85,87.4
-학생23,45,72,76,84,67.1
-학생24,82,46,80,91,72.6
-학생25,77,43,90,100,74.0
-학생26,68,40,67,74,60.6
-학생27,86,91,78,67,82.1
-학생28,70,51,79,74,66.9
-학생29,67,80,70,89,75.9
-학생30,51,92,92,95,80.3`;
-
-        // Parse CSV
-        function parseCSV(csv) {
-            const lines = csv.trim().split('\\n');
-            const headers = lines[0].split(',');
-            // Mapping headers to simpler keys
-            const keyMap = {
-                '이름': 'name',
-                '중간고사(30%)': 'midterm',
-                '기말고사(30%)': 'final',
-                '수행평가1(20%)': 'perf1',
-                '수행평가2(20%)': 'perf2',
-                '총점': 'total'
-            };
-            
-            return lines.slice(1).map(line => {
-                const values = line.split(',');
-                const obj = {};
-                headers.forEach((header, index) => {
-                    const key = keyMap[header.trim()] || header.trim();
-                    const value = values[index].trim();
-                    // Convert to number if it looks like one
-                    obj[key] = isNaN(value) ? value : parseFloat(value);
-                });
-                return obj;
-            });
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-color: #38bdf8;
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        const data = parseCSV(csvData);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        // 1. Calculate Stats
-        const totalMean = (data.reduce((sum, row) => sum + row.total, 0) / data.length).toFixed(1);
-        const midMean = (data.reduce((sum, row) => sum + row.midterm, 0) / data.length).toFixed(1);
-        const finalMean = (data.reduce((sum, row) => sum + row.final, 0) / data.length).toFixed(1);
-        const studentCount = data.length;
+        body {
+            font-family: 'Inter', 'Malgun Gothic', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            background-image:
+                radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(129, 140, 248, 0.1) 0px, transparent 50%);
+            padding-bottom: 4rem;
+        }
 
-        // Render Stats
-        const statsContainer = document.getElementById('stats-container');
-        const stats = [
-            { label: '전체 학생 수', value: studentCount + '명' },
-            { label: '총점 평균', value: totalMean + '점' },
-            { label: '중간고사 평균', value: midMean + '점' },
-            { label: '기말고사 평균', value: finalMean + '점' }
-        ];
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
 
-        stats.forEach(stat => {
-            const el = document.createElement('div');
-            el.className = 'stat-card';
-            el.innerHTML = `<h3>${stat.label}</h3><div class="value">${stat.value}</div>`;
-            statsContainer.appendChild(el);
-        });
+        header {
+            padding: 4rem 0 2rem;
+            text-align: center;
+        }
 
-        // 2. Render Top 5 Students
-        const top5 = [...data].sort((a, b) => b.total - a.total).slice(0, 5);
-        const topTableBody = document.querySelector('#top-students-table tbody');
-        
-        top5.forEach((student, index) => {
-            const tr = document.createElement('tr');
-            let grade = 'A';
-            if (student.total < 90) grade = 'B';
-            if (student.total < 80) grade = 'C'; 
-            if (student.total < 70) grade = 'D';
-            
-            tr.innerHTML = `
-                <td><span class="rank-badge">${index + 1}</span></td>
-                <td><b>${student.name}</b></td>
-                <td>${student.total}</td>
-                <td>${grade}</td>
-            `;
-            topTableBody.appendChild(tr);
-        });
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-        // 3. Render Full Table
-        const fullTableBody = document.querySelector('#full-data-table tbody');
-        data.forEach(student => {
-             const tr = document.createElement('tr');
-             tr.innerHTML = `
-                <td>${student.name}</td>
-                <td>${student.midterm}</td>
-                <td>${student.final}</td>
-                <td>${student.perf1}</td>
-                <td>${student.perf2}</td>
-                <td><b>${student.total}</b></td>
-             `;
-             fullTableBody.appendChild(tr);
-        });
+        p.subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
 
-    </script>
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: var(--glass-border);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            display: block;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-left: 1rem;
+            border-left: 4px solid var(--accent-color);
+            margin-top: 3rem;
+        }
+
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .chart-card {
+            background: var(--card-bg);
+            border: var(--glass-border);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .chart-card h3 {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .chart-card img {
+            max-width: 100%;
+            border-radius: 0.5rem;
+        }
+
+        .table-container {
+            background: var(--card-bg);
+            border: var(--glass-border);
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th,
+        td {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        th {
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .tag-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        /* 4단계 난이도 색상 */
+        .color-sang {
+            background: rgba(248, 113, 113, 0.2);
+            color: #fca5a5;
+            border: 1px solid rgba(248, 113, 113, 0.3);
+        }
+
+        /* Red */
+        .color-jungsang {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fcd34d;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        /* Amber */
+        .color-jungha {
+            background: rgba(96, 165, 250, 0.2);
+            color: #93c5fd;
+            border: 1px solid rgba(96, 165, 250, 0.3);
+        }
+
+        /* Blue */
+        .color-ha {
+            background: rgba(52, 211, 153, 0.2);
+            color: #6ee7b7;
+            border: 1px solid rgba(52, 211, 153, 0.3);
+        }
+
+        /* Green */
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <h1>전기 설비 출제원안 분석</h1>
+            <p class="subtitle">4단계 난이도(상/중상/중하/하) 적용 및 단원별 균등 분배 모델</p>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-value">90점</span>
+                <span class="stat-label">총점</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">24문항</span>
+                <span class="stat-label">총 문항 수</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">4단계</span>
+                <span class="stat-label">난이도 구분</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">0.3점</span>
+                <span class="stat-label">배점 간격</span>
+            </div>
+        </div>
+
+        <h2 class="section-title">출제 분석 시각화</h2>
+        <div class="charts-container">
+            <div class="chart-card">
+                <h3>난이도별 문항 수</h3>
+                <img src="./item_distribution.png" alt="난이도별 문항 분포">
+            </div>
+            <div class="chart-card">
+                <h3>배점 기여도 비율</h3>
+                <img src="./score_contribution.png" alt="배점 기여도">
+            </div>
+        </div>
+
+        <h2 class="section-title">단원별 예시 이원목적분류표</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 25%;">단원명</th>
+                        <th style="width: 10%;">문항</th>
+                        <th style="width: 10%;">배점</th>
+                        <th>난이도 및 문항 수 세부</th>
+                        <th style="width: 20%;">내용 요소</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 1단원 -->
+                    <tr>
+                        <td><strong>1. 전기 설비의 개요</strong></td>
+                        <td>8</td>
+                        <td>30</td>
+                        <td>
+                            <div class="tag-group">
+                                <span class="tag color-sang">상 (4.2) × 1</span>
+                                <span class="tag color-jungsang">중상 (3.9) × 3</span>
+                                <span class="tag color-jungha">중하 (3.6) × 3</span>
+                                <span class="tag color-ha">하 (3.3) × 1</span>
+                            </div>
+                        </td>
+                        <td>전압 종별, 심벌, 안전</td>
+                    </tr>
+                    <!-- 2단원 -->
+                    <tr>
+                        <td><strong>2. 발전 설비</strong></td>
+                        <td>8</td>
+                        <td>30</td>
+                        <td>
+                            <div class="tag-group">
+                                <span class="tag color-sang">상 (4.2) × 1</span>
+                                <span class="tag color-jungsang">중상 (3.9) × 3</span>
+                                <span class="tag color-jungha">중하 (3.6) × 3</span>
+                                <span class="tag color-ha">하 (3.3) × 1</span>
+                            </div>
+                        </td>
+                        <td>수력·화력 효율, 발전 원리</td>
+                    </tr>
+                    <!-- 3단원 -->
+                    <tr>
+                        <td><strong>3. 송배전 설비</strong></td>
+                        <td>8</td>
+                        <td>30</td>
+                        <td>
+                            <div class="tag-group">
+                                <span class="tag color-sang">상 (4.2) × 1</span>
+                                <span class="tag color-jungsang">중상 (3.9) × 3</span>
+                                <span class="tag color-jungha">중하 (3.6) × 3</span>
+                                <span class="tag color-ha">하 (3.3) × 1</span>
+                            </div>
+                        </td>
+                        <td>전압 강하, 전선로, 변전</td>
+                    </tr>
+                    <!-- 합계 -->
+                    <tr style="background: rgba(255,255,255,0.03); font-weight: bold;">
+                        <td>합 계</td>
+                        <td>24</td>
+                        <td>90</td>
+                        <td>
+                            <div class="tag-group">
+                                <span class="tag color-sang">상: 3문항 (12.6점)</span>
+                                <span class="tag color-jungsang">중상: 9문항 (35.1점)</span>
+                                <span class="tag color-jungha">중하: 9문항 (32.4점)</span>
+                                <span class="tag color-ha">하: 3문항 (9.9점)</span>
+                            </div>
+                        </td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 </body>
+
 </html>
