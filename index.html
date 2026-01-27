@@ -4,321 +4,2949 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>전기 설비 3차 지필평가 출제원안</title>
-    <meta name="description" content="2024학년도 전기 설비 지필평가 객관식 문항 출제 계획 및 난이도 분석 보고서입니다.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>충남대학교 교육대학원 기술교육전공 졸업사정 시스템</title>
+    <meta name="description" content="충남대학교 교육대학원 기술교육전공 학생들을 위한 자가 졸업 사정 및 요건 체크 시스템입니다.">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: rgba(30, 41, 59, 0.7);
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --accent-color: #38bdf8;
-            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+            --primary: #2563eb;
+            --primary-700: #1d4ed8;
+            --primary-light: #eff6ff;
+            --secondary: #64748b;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --bg: #f8fafc;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --radius: 20px;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
         }
 
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
         }
 
         body {
-            font-family: 'Inter', 'Malgun Gothic', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-primary);
+            background: var(--bg);
+            color: var(--text-main);
             line-height: 1.6;
-            background-image:
-                radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.1) 0px, transparent 50%),
-                radial-gradient(at 100% 0%, rgba(129, 140, 248, 0.1) 0px, transparent 50%);
-            padding-bottom: 4rem;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated Blobs Background */
+        body::before,
+        body::after {
+            content: "";
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(100px);
+            opacity: 0.2;
+            pointer-events: none;
+        }
+
+        body::before {
+            background: var(--primary);
+            top: -100px;
+            right: -100px;
+            animation: blobFloat 20s infinite alternate;
+        }
+
+        body::after {
+            background: var(--accent);
+            bottom: -100px;
+            left: -100px;
+            animation: blobFloat 25s infinite alternate-reverse;
+        }
+
+        @keyframes blobFloat {
+            from {
+                transform: translate(0, 0) scale(1);
+            }
+
+            to {
+                transform: translate(40px, 40px) scale(1.1);
+            }
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 0 1.5rem;
         }
 
+        /* Header */
         header {
-            padding: 4rem 0 2rem;
             text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .logo-container {
+            width: 320px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.25rem;
             font-weight: 800;
+            color: var(--text-main);
             margin-bottom: 0.5rem;
-            background: linear-gradient(to right, #38bdf8, #818cf8);
+            letter-spacing: -1px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         p.subtitle {
-            color: var(--text-secondary);
+            color: var(--text-muted);
             font-size: 1.1rem;
+            font-weight: 500;
         }
 
-        .stats-grid {
+        /* Glass Cards */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 2rem;
+            animation: cardFadeIn 0.5s ease-out;
+        }
+
+        @keyframes cardFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Steps Progress */
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            margin: 0 auto 4rem;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--border);
+            z-index: 0;
+        }
+
+        .step-label {
+            margin-top: 10px;
+            white-space: nowrap;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            transition: color 0.3s;
+            pointer-events: none;
+            /* Let the container handle clicks */
+        }
+
+        .step-container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            /* Ensure equal spacing and larger click area */
+            cursor: pointer;
+        }
+
+        .step {
+            background: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            border: 2px solid var(--border);
+            color: var(--text-muted);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: none;
+            /* Let the container handle clicks */
+        }
+
+        .step-container.active .step {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 8px 16px rgba(37, 99, 235, 0.2);
+            transform: scale(1.1);
+        }
+
+        .step-container.active .step-label {
+            color: var(--primary);
+        }
+
+        .step-container.done .step {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: white;
+        }
+
+        .step-container.done .step::after {
+            content: '✓';
+            font-size: 1.2rem;
+        }
+
+        .step-container.done .step span {
+            display: none;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: white;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .radio-group {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .radio-box {
+            border: 2px solid var(--border);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            background: white;
+        }
+
+        .radio-box:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .radio-box.selected {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            box-shadow: 0 0 0 1px var(--primary);
+        }
+
+        .radio-box i {
+            background: var(--primary-light);
+            padding: 10px;
+            border-radius: 12px;
+            color: var(--primary);
+        }
+
+        /* Buttons */
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #003a77;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--border);
+            color: var(--text-main);
+        }
+
+        .btn-secondary:hover {
+            background: #d1d5db;
+        }
+
+        /* Course Matrix */
+        .semester-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
-            margin-bottom: 3rem;
-            margin-top: 2rem;
+        }
+
+        .semester-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+
+        .semester-title {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+
+        .course-slot {
+            margin-bottom: 0.75rem;
+        }
+
+        .course-slot select {
+            font-size: 0.9rem;
+            padding: 0.5rem;
+        }
+
+        /* Track specific UI */
+        .recognition-section {
+            background: #fff9eb;
+            border: 1px solid #fef3c7;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        /* Results */
+        .result-dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 600px) {
+            .result-dashboard {
+                grid-template-columns: 1fr;
+            }
         }
 
         .stat-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            border: var(--glass-border);
+            background: white;
             padding: 1.5rem;
-            border-radius: 1rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
             text-align: center;
         }
 
         .stat-value {
-            display: block;
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--text-primary);
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
         }
 
         .stat-label {
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-        }
-
-        .section-title {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            padding-left: 1rem;
-            border-left: 4px solid var(--accent-color);
-            margin-top: 3rem;
-        }
-
-        .charts-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .chart-card {
-            background: var(--card-bg);
-            border: var(--glass-border);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .chart-card h3 {
-            margin-bottom: 1rem;
-            color: var(--text-secondary);
-        }
-
-        .chart-card img {
-            max-width: 100%;
-            border-radius: 0.5rem;
-        }
-
-        .table-container {
-            background: var(--card-bg);
-            border: var(--glass-border);
-            border-radius: 1rem;
-            overflow: hidden;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-        }
-
-        th,
-        td {
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        th {
-            background: rgba(56, 189, 248, 0.1);
-            color: var(--accent-color);
-            font-weight: 600;
+            color: var(--text-muted);
             font-size: 0.9rem;
         }
 
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        .tag-group {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .tag {
-            padding: 0.25rem 0.6rem;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: 600;
+        .status-pill {
             display: inline-flex;
             align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 99px;
+            font-size: 0.85rem;
+            font-weight: 600;
         }
 
-        /* 4단계 난이도 색상 */
-        .color-sang {
-            background: rgba(248, 113, 113, 0.2);
-            color: #fca5a5;
-            border: 1px solid rgba(248, 113, 113, 0.3);
+        .status-pass {
+            background: #d1fae5;
+            color: #065f46;
         }
 
-        /* Red */
-        .color-jungsang {
-            background: rgba(251, 191, 36, 0.2);
-            color: #fcd34d;
-            border: 1px solid rgba(251, 191, 36, 0.3);
+        .status-fail {
+            background: #fee2e2;
+            color: #991b1b;
         }
 
-        /* Amber */
-        .color-jungha {
-            background: rgba(96, 165, 250, 0.2);
-            color: #93c5fd;
-            border: 1px solid rgba(96, 165, 250, 0.3);
+        .check-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
         }
 
-        /* Blue */
-        .color-ha {
-            background: rgba(52, 211, 153, 0.2);
-            color: #6ee7b7;
-            border: 1px solid rgba(52, 211, 153, 0.3);
+        .check-item:last-child {
+            border: none;
         }
 
-        /* Green */
+        .check-icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .check-icon.pass {
+            color: var(--success);
+        }
+
+        .check-icon.fail {
+            color: var(--danger);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Custom Checkbox */
+        .checkbox-container {
+            display: block;
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 1rem;
+            user-select: none;
+        }
+
+        .checkbox-container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        .checkbox-container.disabled-excluded {
+            text-decoration: line-through;
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .checkbox-container.disabled-excluded input {
+            pointer-events: none;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 2px;
+            left: 0;
+            height: 22px;
+            width: 22px;
+            background-color: #eee;
+            border-radius: 4px;
+        }
+
+        .checkbox-container:hover input~.checkmark {
+            background-color: #ccc;
+        }
+
+        .checkbox-container input:checked~.checkmark {
+            background-color: var(--primary);
+        }
+
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        .checkbox-container input:checked~.checkmark:after {
+            display: block;
+        }
+
+        .checkbox-container .checkmark:after {
+            left: 8px;
+            top: 4px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        #final-status {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            padding: 2rem;
+            border-radius: var(--radius);
+            margin-top: 2rem;
+        }
+
+        .grad-possible {
+            background: #ecfdf5;
+            border: 2px solid #10b981;
+            color: #065f46;
+        }
+
+        .grad-impossible {
+            background: #fff1f2;
+            border: 2px solid #fb7185;
+            color: #9f1239;
+        }
+
+        .grid-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        /* Custom Autocomplete */
+        .autocomplete-container {
+            position: relative;
+        }
+
+        .dropdown-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            max-height: 500px;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+            margin-top: 8px;
+            width: 800px;
+            /* 4 columns */
+            padding: 15px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        /* Adjust position if near right edge */
+        .dropdown-list.align-right {
+            left: auto;
+            right: 0;
+        }
+
+        .dropdown-column {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .column-header {
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--text-muted);
+            padding: 4px 8px;
+            margin-bottom: 8px;
+            border-bottom: 2px solid var(--primary-light);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            position: sticky;
+            top: -15px;
+            background: white;
+            z-index: 11;
+        }
+
+        .dropdown-item {
+            padding: 8px 10px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            border-radius: 8px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .dropdown-item:hover:not(.disabled) {
+            background-color: var(--primary-light);
+            border-color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        .dropdown-item.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #f8fafc;
+        }
+
+        .dropdown-item .subject-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .dropdown-item .subject-meta {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 850px) {
+            .dropdown-list {
+                width: 400px;
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .dropdown-list {
+                width: 280px;
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .subject-name {
+            font-weight: 500;
+        }
+
+        .category-badge {
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        /* Category Colors */
+        .color-basic {
+            color: #059669;
+        }
+
+        /* 기본이수 */
+        .bg-basic {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .color-essential {
+            color: #2563eb;
+        }
+
+        /* 교과교육 */
+        .bg-essential {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .color-major {
+            color: #4b5563;
+        }
+
+        /* 일반전공 */
+        .bg-major {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .color-edu {
+            color: #7c3aed;
+        }
+
+        /* 교직 */
+        .bg-edu {
+            background: #f5f3ff;
+            color: #5b21b6;
+        }
+
+        .guide-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.85rem;
+            color: var(--primary);
+            text-decoration: none;
+            margin-top: 0.5rem;
+            padding: 4px 8px;
+            background: var(--primary-light);
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .guide-link:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Results Detailed Accordion */
+        .requirement-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .requirement-header {
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            background: #f8fafc;
+            /* Added Shading */
+            transition: all 0.2s;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .requirement-header:hover {
+            background: var(--primary-light);
+        }
+
+        .total-progress-badge {
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 6px solid var(--primary);
+            animation: slideInLeft 0.5s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .credit-text-blue {
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        .credit-text-red {
+            color: var(--danger);
+            font-weight: 800;
+        }
+
+        .requirement-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .requirement-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .requirement-content {
+            padding: 0 1.5rem 1.5rem;
+            display: none;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .requirement-card.open .requirement-content {
+            display: block;
+        }
+
+        .requirement-card.open .chevron-icon {
+            transform: rotate(180deg);
+        }
+
+        .chevron-icon {
+            transition: transform 0.3s ease;
+            color: var(--text-muted);
+        }
+
+        .missing-list {
+            margin-top: 1rem;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .missing-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 0.95rem;
+            color: #9f1239;
+            margin-bottom: 10px;
+            padding: 12px 16px;
+            background: #fff1f2;
+            /* Strong Shading */
+            border: 1px solid #fda4af;
+            border-radius: 12px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .pass-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: var(--success);
+            margin-bottom: 6px;
+            padding: 8px 12px;
+            background: #f0fdf4;
+            border-radius: 8px;
+        }
+
+        .requirement-guide-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.8rem;
+            color: var(--primary);
+            text-decoration: none;
+            padding: 4px 10px;
+            background: var(--primary-light);
+            border-radius: 6px;
+            margin-top: 1rem;
+        }
+
+        /* Credit Item Specific Colors */
+        .credit-item-total {
+            border-left: 4px solid var(--primary) !important;
+            background-color: #f0f7ff !important;
+        }
+
+        .credit-item-major {
+            border-left: 4px solid #059669 !important;
+            background-color: #f0fdf4 !important;
+        }
+
+        .credit-item-edu {
+            border-left: 4px solid #7c3aed !important;
+            background-color: #f5f3ff !important;
+        }
+
+        /* Override backgrounds if FAIL */
+        .missing-item.credit-item-total,
+        .missing-item.credit-item-major,
+        .missing-item.credit-item-edu {
+            background-color: #fff1f2 !important;
+            /* Keep red-ish for fail */
+        }
+
+        .dropdown-item.disabled {
+            color: #ccc;
+            cursor: not-allowed;
+            background: #f9f9f9;
+        }
+
+        /* Improved Requirement 1 UI */
+        .credit-summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 600px) {
+            .credit-summary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .credit-card {
+            padding: 1rem;
+            border-radius: 12px;
+            background: white;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .credit-card-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .credit-card-value {
+            font-size: 1.1rem;
+            font-weight: 800;
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+        }
+
+        .credit-card-target {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        /* High Visibility for Total Credit Card */
+        .credit-card.highlight {
+            border: 2px solid var(--primary);
+            background: linear-gradient(to bottom right, #ffffff, var(--primary-light));
+            transform: scale(1.02);
+            box-shadow: var(--shadow-md);
+            z-index: 10;
+        }
+
+        .credit-card.highlight .credit-card-label {
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .credit-card.highlight .credit-card-value {
+            font-size: 1.8rem;
+            /* Significantly larger */
+        }
+
+        .credit-card.highlight .credit-card-target {
+            font-size: 1rem;
+        }
+
+        .credit-card.highlight .credit-progress-bg {
+            height: 8px;
+        }
+
+        .credit-progress-bg {
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        .credit-progress-bar {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        .area-status-tile {
+            padding: 0.75rem;
+            border-radius: 10px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+            /* Prevent wrapping of the whole tile content */
+        }
+
+        .area-status-tile.pass {
+            background: #f0fdf4;
+            border-color: #bbf7d0;
+            color: #166534;
+        }
+
+        .area-status-tile.fail {
+            background: #fff1f2;
+            border: 2px solid var(--danger);
+            color: var(--danger);
+            opacity: 1;
+            /* Make it fully opaque to stand out */
+            font-weight: 700;
+            box-shadow: inset 0 0 4px rgba(239, 68, 68, 0.1);
+        }
+
+        .track-badge-header {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 16px;
+            background: var(--primary-light);
+            color: var(--primary);
+            border-radius: 99px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--primary);
+        }
+
+        .category-btn {
+            font-size: 0.9rem !important;
+            justify-content: center !important;
+        }
+
+        .track-group {
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dropdown-item.disabled .subject-name {
+            text-decoration: line-through;
+            color: #aaa;
+        }
+
+        .semester-footer {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed var(--border);
+            text-align: right;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .section-header-shaded {
+            background: #f1f5f9;
+            padding: 0.75rem 1.25rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 5px solid var(--primary);
+        }
+
+        .section-header-shaded h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: var(--text-main);
+        }
     </style>
 </head>
 
 <body>
 
     <div class="container">
+        <datalist id="subject-datalist"></datalist>
         <header>
-            <h1>전기 설비 출제원안 분석</h1>
-            <p class="subtitle">4단계 난이도(상/중상/중하/하) 적용 및 단원별 균등 분배 모델</p>
+            <div class="logo-container" style="background: transparent; box-shadow: none;">
+                <img src="dept_logo.png" alt="CNU Tech Ed Logo">
+            </div>
+            <h1>기술교육전공 졸업사정</h1>
+            <p class="subtitle">충남대학교 교육대학원 자가 진단 시스템</p>
         </header>
 
-        <div class="stats-grid">
-            <div class="stat-card">
-                <span class="stat-value">90점</span>
-                <span class="stat-label">총점</span>
+        <div class="steps">
+            <div class="step-container active" id="step-cont-1" onclick="goToStep(1)">
+                <div class="step" id="step-dot-1"><span>1</span></div>
+                <div class="step-label">정보 입력</div>
             </div>
-            <div class="stat-card">
-                <span class="stat-value">24문항</span>
-                <span class="stat-label">총 문항 수</span>
+            <div class="step-container" id="step-cont-2" onclick="goToStep(2)">
+                <div class="step" id="step-dot-2"><span>2</span></div>
+                <div class="step-label">이수 현황</div>
             </div>
-            <div class="stat-card">
-                <span class="stat-value">4단계</span>
-                <span class="stat-label">난이도 구분</span>
-            </div>
-            <div class="stat-card">
-                <span class="stat-value">0.3점</span>
-                <span class="stat-label">배점 간격</span>
+            <div class="step-container" id="step-cont-3" onclick="goToStep(3)">
+                <div class="step" id="step-dot-3"><span>3</span></div>
+                <div class="step-label">사정 결과</div>
             </div>
         </div>
 
-        <h2 class="section-title">출제 분석 시각화</h2>
-        <div class="charts-container">
-            <div class="chart-card">
-                <h3>난이도별 문항 수</h3>
-                <img src="./item_distribution.png" alt="난이도별 문항 분포">
+        <!-- Step 1: Profile & Track Selection -->
+        <div id="step-1" class="card">
+            <h2 style="margin-bottom: 2rem;">기본 정보 입력</h2>
+            <div class="form-group">
+                <label for="student-id">학번</label>
+                <input type="text" id="student-id" placeholder="예: 202412345" maxlength="9">
+                <small id="id-hint" style="color: var(--text-muted); display: block; margin-top: 5px;">2023~2026학번 형식을
+                    입력하세요.</small>
             </div>
-            <div class="chart-card">
-                <h3>배점 기여도 비율</h3>
-                <img src="./score_contribution.png" alt="배점 기여도">
+            <div class="form-group">
+                <label for="student-name">성명</label>
+                <input type="text" id="student-name" placeholder="이름을 입력하세요">
+            </div>
+            <div class="form-group">
+                <label>과정 종류 선택</label>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 1.5rem;">
+                    <button type="button" class="btn btn-secondary category-btn" id="cat-yangseong"
+                        onclick="showSubTracks('yangseong')">양성 과정</button>
+                    <button type="button" class="btn btn-secondary category-btn" id="cat-minor"
+                        onclick="showSubTracks('minor')">부전공 과정</button>
+                    <button type="button" class="btn btn-secondary category-btn" id="cat-retraining"
+                        onclick="showSubTracks('retraining')">재교육 과정</button>
+                </div>
+
+                <div id="sub-tracks-container">
+                    <div id="group-yangseong" class="track-group hidden">
+                        <div class="radio-group">
+                            <div class="radio-box" data-track="yangseong_report"
+                                onclick="selectTrack('yangseong_report')">
+                                <i data-lucide="book-open"></i>
+                                <div>
+                                    <strong>양성 과정 (무논문 연구보고서)</strong>
+                                    <div style="font-size: 0.85rem; color: var(--text-muted);">30학점(전공 24, 교직 6), 5학기,
+                                        연구보고서 제출</div>
+                                </div>
+                            </div>
+                            <div class="radio-box" data-track="yangseong_thesis_30"
+                                onclick="selectTrack('yangseong_thesis_30')">
+                                <i data-lucide="graduation-cap"></i>
+                                <div>
+                                    <strong>양성 과정 (학위논문) - 30학점</strong>
+                                    <div style="font-size: 0.85rem; color: var(--text-muted);">30학점(전공 24, 교직 6), 5학기,
+                                        논문 제출</div>
+                                </div>
+                            </div>
+                            <div class="radio-box" data-track="yangseong_thesis"
+                                onclick="selectTrack('yangseong_thesis')">
+                                <i data-lucide="graduation-cap"></i>
+                                <div>
+                                    <strong>양성 과정 (학위논문) - 24학점</strong>
+                                    <div style="font-size: 0.85rem; color: var(--text-muted);">24학점(전공 20, 교직 4), 4학기,
+                                        논문 제출</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="group-minor" class="track-group hidden">
+                        <div class="radio-group">
+                            <div class="radio-box" data-track="minor_report" onclick="selectTrack('minor_report')">
+                                <i data-lucide="award"></i>
+                                <div>
+                                    <strong>부전공 과정 (무논문 연구보고서)</strong>
+                                    <div style="font-size: 0.85rem; color: var(--text-muted);">30학점(전공 30), 5학기, 연구보고서
+                                        제출</div>
+                                </div>
+                            </div>
+                            <div class="radio-box" data-track="minor_thesis" onclick="selectTrack('minor_thesis')">
+                                <i data-lucide="graduation-cap"></i>
+                                <div>
+                                    <strong>부전공 과정 (학위논문)</strong>
+                                    <div style="font-size: 0.85rem; color: var(--text-muted);">30학점(전공 30), 5학기, 논문 제출
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="group-retraining" class="track-group hidden">
+                        <div class="radio-group">
+                            <div class="radio-box" data-track="retraining_report"
+                                onclick="selectTrack('retraining_report')">
+                                <i data-lucide="book-open"></i>
+                                <div>
+                                    <strong>재교육 과정 (무논문 연구보고서)</strong>
+                                    <div style="font-size: 0.85rem; color: var(--text-muted);">30학점(전공 24, 교직 6), 5학기,
+                                        연구보고서 제출</div>
+                                </div>
+                            </div>
+                            <div class="radio-box" data-track="retraining_thesis"
+                                onclick="selectTrack('retraining_thesis')">
+                                <i data-lucide="graduation-cap"></i>
+                                <div>
+                                    <strong>재교육 과정 (학위논문)</strong>
+                                    <div style="font-size: 0.85rem; color: var(--text-muted);">24학점(전공 20, 교직 4), 4학기,
+                                        논문 제출</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="selected-track">
+            </div>
+            <div class="btn-container">
+                <div></div>
+                <button class="btn btn-primary" onclick="goToStep(2)">다음 단계 <i data-lucide="chevron-right"></i></button>
             </div>
         </div>
 
-        <h2 class="section-title">단원별 예시 이원목적분류표</h2>
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th style="width: 25%;">단원명</th>
-                        <th style="width: 10%;">문항</th>
-                        <th style="width: 10%;">배점</th>
-                        <th>난이도 및 문항 수 세부</th>
-                        <th style="width: 20%;">내용 요소</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- 1단원 -->
-                    <tr>
-                        <td><strong>1. 전기 설비의 개요</strong></td>
-                        <td>8</td>
-                        <td>30</td>
-                        <td>
-                            <div class="tag-group">
-                                <span class="tag color-sang">상 (4.2) × 1</span>
-                                <span class="tag color-jungsang">중상 (3.9) × 3</span>
-                                <span class="tag color-jungha">중하 (3.6) × 3</span>
-                                <span class="tag color-ha">하 (3.3) × 1</span>
-                            </div>
-                        </td>
-                        <td>전압 종별, 심벌, 안전</td>
-                    </tr>
-                    <!-- 2단원 -->
-                    <tr>
-                        <td><strong>2. 발전 설비</strong></td>
-                        <td>8</td>
-                        <td>30</td>
-                        <td>
-                            <div class="tag-group">
-                                <span class="tag color-sang">상 (4.2) × 1</span>
-                                <span class="tag color-jungsang">중상 (3.9) × 3</span>
-                                <span class="tag color-jungha">중하 (3.6) × 3</span>
-                                <span class="tag color-ha">하 (3.3) × 1</span>
-                            </div>
-                        </td>
-                        <td>수력·화력 효율, 발전 원리</td>
-                    </tr>
-                    <!-- 3단원 -->
-                    <tr>
-                        <td><strong>3. 송배전 설비</strong></td>
-                        <td>8</td>
-                        <td>30</td>
-                        <td>
-                            <div class="tag-group">
-                                <span class="tag color-sang">상 (4.2) × 1</span>
-                                <span class="tag color-jungsang">중상 (3.9) × 3</span>
-                                <span class="tag color-jungha">중하 (3.6) × 3</span>
-                                <span class="tag color-ha">하 (3.3) × 1</span>
-                            </div>
-                        </td>
-                        <td>전압 강하, 전선로, 변전</td>
-                    </tr>
-                    <!-- 합계 -->
-                    <tr style="background: rgba(255,255,255,0.03); font-weight: bold;">
-                        <td>합 계</td>
-                        <td>24</td>
-                        <td>90</td>
-                        <td>
-                            <div class="tag-group">
-                                <span class="tag color-sang">상: 3문항 (12.6점)</span>
-                                <span class="tag color-jungsang">중상: 9문항 (35.1점)</span>
-                                <span class="tag color-jungha">중하: 9문항 (32.4점)</span>
-                                <span class="tag color-ha">하: 3문항 (9.9점)</span>
-                            </div>
-                        </td>
-                        <td>-</td>
-                    </tr>
-                </tbody>
-            </table>
+        <!-- Step 2: Checklists -->
+        <div id="step-2" class="card hidden">
+            <div style="text-align: center; margin-bottom: 2.5rem;">
+                <div class="track-badge-header" id="step2-track-name">선택된 과정명</div>
+                <h2 id="step2-title" style="margin-top: 0.5rem; font-family: 'Outfit';">전공 및 교직 이수 현황</h2>
+            </div>
+
+            <div class="credit-summary-grid" id="credit-summary-step2" style="margin-bottom: 2.5rem;">
+                <div class="credit-card" id="card-major-credits">
+                    <div class="credit-card-label">실시간 전공 이수</div>
+                    <div class="credit-card-value">
+                        <span id="major-curr" class="credit-text-red">0</span>
+                        <span class="credit-card-target">/ <span id="major-target">24</span> 학점</span>
+                    </div>
+                    <div class="credit-progress-bg">
+                        <div id="major-bar" class="credit-progress-bar" style="width: 0%; background-color: #059669;">
+                        </div>
+                    </div>
+                </div>
+                <div class="credit-card" id="card-edu-credits">
+                    <div class="credit-card-label">실시간 교직 이수</div>
+                    <div class="credit-card-value">
+                        <span id="edu-curr" class="credit-text-red">0</span>
+                        <span class="credit-card-target">/ <span id="edu-target">6</span> 학점</span>
+                    </div>
+                    <div class="credit-progress-bg">
+                        <div id="edu-bar" class="credit-progress-bar" style="width: 0%; background-color: #7c3aed;">
+                        </div>
+                    </div>
+                </div>
+                <div class="credit-card highlight" id="card-total-credits">
+                    <div class="credit-card-label">실시간 전체 이수</div>
+                    <div class="credit-card-value">
+                        <span id="total-curr" class="credit-text-red">0</span>
+                        <span class="credit-card-target">/ <span id="total-target">30</span> 학점</span>
+                    </div>
+                    <div class="credit-progress-bg">
+                        <div id="total-bar" class="credit-progress-bar"
+                            style="width: 0%; background-color: var(--primary);"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Graduation Requirement 1 -->
+            <div style="margin-bottom: 3.5rem;">
+                <div class="section-header-shaded">
+                    <h3 id="req-h1"><i data-lucide="book-open" style="vertical-align: middle;"></i> 졸업요건1. 수업 및 학점</h3>
+                </div>
+
+                <!-- Undergraduate Recognition (Only for Major) -->
+                <div id="recognition-area" class="recognition-section hidden">
+                    <h3 style="font-size: 1rem; margin-bottom: 1rem;">학부 과목 인정 (최대 3과목)</h3>
+                    <p style="font-size: 0.85rem; color: #92400e; margin-bottom: 1rem;">학부에서 이수한 경우 체크하세요. 대학원 수강 학점에는
+                        합산되지
+                        않으나 기본이수영역이 충족됩니다.</p>
+                    <div class="grid-list" id="recognition-list"
+                        style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+                        <!-- JS populated -->
+                    </div>
+                </div>
+
+                <div class="semester-grid" id="semesters-container">
+                    <!-- JS populated -->
+                </div>
+                <div id="extra-semester-btn-container" style="margin-top: 1.5rem; text-align: center;" class="hidden">
+                    <button class="btn btn-secondary" onclick="addExtraSemester()" style="margin: 0 auto;">
+                        <i data-lucide="plus-circle"></i> 추가 학기 등록
+                    </button>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">학점 충족을 위해 추가 학기 수강이 필요한
+                        경우 클릭하세요.</p>
+                </div>
+            </div>
+
+            <div id="section-gender" style="margin-bottom: 2.5rem;">
+                <div class="section-header-shaded">
+                    <h3 id="req-h2"><i data-lucide="users" style="vertical-align: middle;"></i> 졸업요건2. 성인지교육</h3>
+                    <a href="https://egc.cnu.ac.kr/egc/board/notice.do?mode=view&articleNo=288590&article.offset=0&articleLimit=15&srSearchVal=%EC%84%B1%EC%9D%B8%EC%A7%80%EA%B5%90%EC%9C%A1"
+                        target="_blank" class="guide-link" style="margin-top:0;">
+                        <i data-lucide="external-link" style="width: 14px; height: 14px;"></i> 안내
+                    </a>
+                </div>
+                <div class="grid-list">
+                    <label class="checkbox-container">성인지교육 1차 이수
+                        <input type="checkbox" id="check-gender1" onchange="saveData()"><span class="checkmark"></span>
+                    </label>
+                    <label class="checkbox-container">성인지교육 2차 이수
+                        <input type="checkbox" id="check-gender2"
+                            onchange="handleSequentialCheck(this, 'check-gender1')"><span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 2.5rem;">
+                <div class="section-header-shaded">
+                    <h3 id="req-h3"><i data-lucide="shield-check" style="vertical-align: middle;"></i> 졸업요건3. 연구윤리</h3>
+                    <a href="https://egc.cnu.ac.kr/egc/board/notice.do?mode=view&articleNo=538237&article.offset=0&articleLimit=15&srSearchVal=%EC%97%B0%EA%B5%AC%EC%9C%A4%EB%A6%AC"
+                        target="_blank" class="guide-link" style="margin-top:0;">
+                        <i data-lucide="external-link" style="width: 14px; height: 14px;"></i> 안내
+                    </a>
+                </div>
+                <div class="grid-list">
+                    <label class="checkbox-container">연구윤리 교육 이수
+                        <input type="checkbox" id="check-ethics"><span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div id="section-cpr" style="margin-bottom: 2.5rem;">
+                <div class="section-header-shaded">
+                    <h3 id="req-h4"><i data-lucide="heart-pulse" style="vertical-align: middle;"></i> 졸업요건4. 심폐소생술</h3>
+                    <a href="https://egc.cnu.ac.kr/egc/board/notice.do?mode=view&articleNo=569225&article.offset=0&articleLimit=15&srSearchVal=%EC%8B%AC%ED%8F%90%EC%86%8C%EC%83%9D"
+                        target="_blank" class="guide-link" style="margin-top:0;">
+                        <i data-lucide="external-link" style="width: 14px; height: 14px;"></i> 안내
+                    </a>
+                </div>
+                <div class="grid-list">
+                    <label class="checkbox-container">심폐소생술 1회 (서로 다른 년도)
+                        <input type="checkbox" id="check-cpr1" onchange="saveData()"><span class="checkmark"></span>
+                    </label>
+                    <label class="checkbox-container">심폐소생술 2회 (서로 다른 년도)
+                        <input type="checkbox" id="check-cpr2"
+                            onchange="handleSequentialCheck(this, 'check-cpr1')"><span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div id="section-apt" style="margin-bottom: 2.5rem;">
+                <div class="section-header-shaded">
+                    <h3 id="req-h5"><i data-lucide="clipboard-check" style="vertical-align: middle;"></i> 졸업요건5. 교직 적성 및
+                        인성 검사</h3>
+                    <a href="https://egc.cnu.ac.kr/egc/board/notice.do?mode=view&articleNo=566109&article.offset=0&articleLimit=15&srSearchVal=%EC%A0%81%EC%84%B1"
+                        target="_blank" class="guide-link" style="margin-top:0;">
+                        <i data-lucide="external-link" style="width: 14px; height: 14px;"></i> 안내
+                    </a>
+                </div>
+                <div class="grid-list">
+                    <label class="checkbox-container">교직 적성 및 인성 검사 1회 적격
+                        <input type="checkbox" id="check-apt1" onchange="saveData()"><span class="checkmark"></span>
+                    </label>
+                    <label class="checkbox-container">교직 적성 및 인성 검사 2회 적격
+                        <input type="checkbox" id="check-apt2"
+                            onchange="handleSequentialCheck(this, 'check-apt1')"><span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 2.5rem;">
+                <div class="section-header-shaded">
+                    <h3 id="req-h6"><i data-lucide="edit-3" style="vertical-align: middle;"></i> 졸업요건6. 종합시험 합격</h3>
+                    <a href="https://egc.cnu.ac.kr/egc/board/notice.do?mode=view&articleNo=573353&article.offset=0&articleLimit=15&srSearchVal=%EC%A2%85%ED%95%A9%EC%8B%9C%ED%97%98"
+                        target="_blank" class="guide-link" style="margin-top:0;">
+                        <i data-lucide="external-link" style="width: 14px; height: 14px;"></i> 안내
+                    </a>
+                </div>
+                <div class="grid-list">
+                    <label class="checkbox-container">교육학개론
+                        <input type="checkbox" id="exam-edu"><span class="checkmark"></span>
+                    </label>
+                    <label class="checkbox-container">기술교육론
+                        <input type="checkbox" id="exam-tecedu"><span class="checkmark"></span>
+                    </label>
+                    <label class="checkbox-container">건설기술
+                        <input type="checkbox" id="exam-construct"><span class="checkmark"></span>
+                    </label>
+                    <label class="checkbox-container">전기전자기술
+                        <input type="checkbox" id="exam-elec"><span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Education Service and Teaching Practice -->
+            <div style="margin-bottom: 2.5rem;" id="section-edu-practice">
+                <div class="section-header-shaded">
+                    <h3 id="req-h-practice"><i data-lucide="graduation-cap" style="vertical-align: middle;"></i> 졸업요건7.
+                        교육봉사 및 교육실습</h3>
+                    <a href="https://egc.cnu.ac.kr/egc/board/notice.do?mode=view&articleNo=554632&article.offset=0&articleLimit=15&srSearchVal=%EA%B5%90%EC%9C%A1%EC%8B%A4%EC%8A%B5"
+                        target="_blank" class="guide-link" style="margin-top:0;">
+                        <i data-lucide="external-link" style="width: 14px; height: 14px;"></i> 안내
+                    </a>
+                </div>
+                <div class="grid-list">
+                    <label class="checkbox-container" id="lbl-edu-service-na">교육봉사 해당 없음
+                        <input type="checkbox" id="check-edu-service-na"
+                            onchange="handleExclusion(this, 'check-edu-service-60', 'lbl-edu-service-60')"><span
+                            class="checkmark"></span>
+                    </label>
+                    <label class="checkbox-container" id="lbl-teaching-practice-na">교육실습 해당 없음 (면제 서류 제출)
+                        <input type="checkbox" id="check-teaching-practice-na"
+                            onchange="handleExclusion(this, 'check-teaching-practice-1', 'lbl-teaching-practice-1')"><span
+                            class="checkmark"></span>
+                    </label>
+                    <label class="checkbox-container" id="lbl-edu-service-60">교육봉사 60시간 완료
+                        <input type="checkbox" id="check-edu-service-60"
+                            onchange="handleExclusion(this, 'check-edu-service-na', 'lbl-edu-service-na')"><span
+                            class="checkmark"></span>
+                    </label>
+                    <label class="checkbox-container" id="lbl-teaching-practice-1">교육실습 1회 완료
+                        <input type="checkbox" id="check-teaching-practice-1"
+                            onchange="handleExclusion(this, 'check-teaching-practice-na', 'lbl-teaching-practice-na')"><span
+                            class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Paper / Thesis Steps -->
+            <div id="paper-steps-area">
+                <div class="section-header-shaded">
+                    <h3 id="req-h7"><i data-lucide="file-text" style="vertical-align: middle;"></i> 졸업요건8. <span
+                            id="paper-type-label">연구보고서</span></h3>
+                </div>
+                <div class="grid-list" id="paper-checklist">
+                    <!-- JS populated -->
+                </div>
+            </div>
+
+            <div class="btn-container">
+                <button class="btn btn-secondary" onclick="goToStep(1)"><i data-lucide="chevron-left"></i> 이전</button>
+                <button class="btn btn-primary" onclick="goToStep(3)">사정 결과 조회 <i data-lucide="search"></i></button>
+            </div>
+        </div>
+
+        <!-- Step 3: Result -->
+        <div id="step-3" class="card hidden">
+            <h2 style="margin-bottom: 2rem; text-align: center;">졸업 사정 결과</h2>
+
+            <div id="result-profile"
+                style="text-align: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border);">
+                <h3 id="res-name" style="font-size: 1.5rem;">학부생님</h3>
+                <p id="res-track" style="color: var(--primary); font-weight: 600;">과정명</p>
+                <p id="res-id" style="color: var(--text-muted);">2024xxxxx</p>
+            </div>
+
+            <div class="result-dashboard">
+                <div class="stat-card">
+                    <div class="stat-label">이수 학점 (기준: <span id="req-credits">30</span>)</div>
+                    <div class="stat-value"><span id="curr-credits">0</span></div>
+                    <div id="credit-status" class="status-pill status-fail">미달</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">필수 요건 충족 (기본 5 + 교과 1)</div>
+                    <div class="stat-value"><span id="curr-areas">${areasDisplayCount}</span><span
+                            style="font-size: 1rem; color: var(--text-muted);">/${areasDisplayTarget}</span></div>
+                    <div id="area-status" class="status-pill ${areasPass ? 'status-pass' : 'status-fail'}">${areasPass ?
+                        '충족' : '미비'}</div>
+                </div>
+            </div>
+
+            <div id="requirement-detailed-results">
+                <!-- Requirements will be injected here as accordions -->
+            </div>
+
+            <div id="final-status" class="grad-impossible">
+                졸업 요건 미충족
+            </div>
+
+            <div class="btn-container">
+                <button class="btn btn-secondary" onclick="goToStep(2)"><i data-lucide="edit"></i> 정보 수정</button>
+                <button class="btn btn-primary" onclick="window.print()"><i data-lucide="printer"></i> PDF
+                    저장/인쇄</button>
+            </div>
         </div>
     </div>
+
+    <script>
+        const CONFIG = {
+            tracks: {
+                yangseong_report: { name: '양성 과정 (무논문 연구보고서)', total: 30, major: 24, edu: 6, semesters: 5, type: 'report' },
+                yangseong_thesis_30: { name: '양성 과정 (학위논문) - 30학점', total: 30, major: 24, edu: 6, semesters: 5, type: 'thesis' },
+                yangseong_thesis: { name: '양성 과정 (학위논문) - 24학점', total: 24, major: 20, edu: 4, semesters: 4, type: 'thesis' },
+                minor_report: { name: '부전공 과정 (무논문 연구보고서)', total: 30, major: 30, edu: 0, semesters: 5, type: 'report' },
+                minor_thesis: { name: '부전공 과정 (학위논문)', total: 30, major: 30, edu: 0, semesters: 5, type: 'thesis' },
+                retraining_report: { name: '재교육 과정 (무논문 연구보고서)', total: 30, major: 24, edu: 6, semesters: 5, type: 'report' },
+                retraining_thesis: { name: '재교육 과정 (학위논문)', total: 24, major: 20, edu: 4, semesters: 4, type: 'thesis' }
+            },
+            areas: [
+                { id: 'area_2', name: '제조기술', subjects: ['제조기술'] },
+                { id: 'area_3', name: '건설기술', subjects: ['건설기술'] },
+                { id: 'area_4', name: '수송 및 동력', subjects: ['수송기술', '동력및에너지기술'] },
+                { id: 'area_5', name: '통신 및 전기전자', subjects: ['정보통신기술', '전기전자기술'] },
+                { id: 'area_6', name: '생명기술', subjects: ['생물기술'] }
+            ],
+            essentials: ['기술교육론', '기술과 논술', '기술과 교육과정 및 교재연구'],
+            basic_areas: ['제조기술', '건설기술', '수송기술', '동력및에너지기술', '정보통신기술', '전기전자기술', '생물기술'],
+            major_subjects: [
+                '연구윤리', '기술교육과정연구', '건설기술', '동력및에너지기술', '수송기술',
+                '직업지도', '기술교육개인연구', '기술교육의최신과제', '기술교육세미나', '산업경영및심리학',
+                '기술교과교재연구', '기술교과교육학 연구', '기술교육 연구방법론', '기술 수업 방법론', '기술 학습 평가',
+                '기술교육혁신사례', '제조기술', '정보통신기술', '생물기술', '전기전자기술',
+                '산업공학특론', '창의공학설계', '발명과 문제해결연구', '전통기술 연구', '진로교육연구',
+                '기술교육론', '기술과 논술', '기술과 교육과정 및 교재연구', '특허와지식재산', '공업역학특론',
+                '기계기술특론', '인공지능교육연구', '피지컬컴퓨팅', '기술과사회', 'STEAM 교육연구',
+                '컴퓨터응용교육특론', '교육통계', '인적자원개발론'
+            ],
+            edu_subjects: [
+                '교육학개론', '교육행정 및 교육경영', '교육방법 및 교육공학', '교육심리', '교육평가',
+                '교육과 윤리, 도덕, 가치', '교육사회', '특수교육학개론', '교직실무', '생활지도 및 상담',
+                '교사전문성개발', '교육리더십', '논리 및 논술지도교육', '교육철학 및 교육사',
+                '교육과정', '세계시민교육론', '교육빅데이터분석', '미래교육과 학교변화',
+                '교육사례연구방법', '교육현장연구방법', '학교상담의 이론과 실제', '교육평가도구제작',
+                '창의적교수법'
+            ]
+        };
+
+        let state = {
+            currentStep: 1,
+            maxReachedStep: 1,
+            studentId: '',
+            name: '',
+            track: '',
+            recognition: [],
+            semesters: {},
+            extraSemesters: 0
+        };
+
+        // Initialize History
+        if (!history.state) {
+            history.replaceState({ step: 1 }, null, "");
+        }
+
+        window.onpopstate = function (event) {
+            if (event.state && event.state.step) {
+                const targetStep = event.state.step;
+                const success = goToStep(targetStep, false);
+
+                // If navigation failed (validation), revert the history change
+                if (!success) {
+                    if (targetStep > state.currentStep) {
+                        history.back();
+                    } else {
+                        history.forward();
+                    }
+                }
+            }
+        };
+
+        function showSubTracks(group) {
+            // Reset category buttons
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('btn-primary');
+                btn.classList.add('btn-secondary');
+            });
+            document.getElementById(`cat-${group}`).classList.remove('btn-secondary');
+            document.getElementById(`cat-${group}`).classList.add('btn-primary');
+
+            // Hide all groups
+            document.querySelectorAll('.track-group').forEach(g => g.classList.add('hidden'));
+            // Show selected group
+            document.getElementById(`group-${group}`).classList.remove('hidden');
+
+            // Re-render icons for dynamic content
+            lucide.createIcons();
+
+            // Clear previous selection if it's not in the new group
+            const currentTrack = state.track;
+            if (currentTrack && !currentTrack.startsWith(group)) {
+                state.track = '';
+                state.maxReachedStep = 1; // Reset progress when track category changes
+                document.getElementById('selected-track').value = '';
+                document.querySelectorAll('.radio-box').forEach(box => box.classList.remove('selected'));
+                // Remove 'done' markers from header
+                document.querySelectorAll('.step-container').forEach((el, idx) => {
+                    if (idx > 0) el.classList.remove('done');
+                });
+                state.lastInitializedTrack = null; // Force Step 2 re-init if category changes
+            }
+        }
+
+        function selectTrack(trackId) {
+            if (state.track !== trackId) {
+                state.track = trackId;
+                state.maxReachedStep = 1; // Reset progress when specific track changes
+                state.lastInitializedTrack = null; // Force Step 2 re-init when track changes
+                document.querySelectorAll('.step-container').forEach((el, idx) => {
+                    if (idx > 0) el.classList.remove('done');
+                });
+            }
+            document.querySelectorAll('.radio-box').forEach(box => box.classList.remove('selected'));
+            const selectedBox = document.querySelector(`.radio-box[data-track="${trackId}"]`);
+            if (selectedBox) selectedBox.classList.add('selected');
+            document.getElementById('selected-track').value = trackId;
+        }
+
+        function goToStep(step, pushHistory = true) {
+            if (state.currentStep === step) return true;
+
+            // Gating: Can only go to a step if it's been reached before, it's the next sequential step, or we've reached step 3
+            const canJump = state.maxReachedStep >= 3;
+            if (step > state.maxReachedStep + 1 && !canJump) {
+                return false;
+            }
+
+            // Validation: Moving from 1 to forward
+            if (step > 1 && state.currentStep === 1) {
+                const sidInput = document.getElementById('student-id');
+                const nameInput = document.getElementById('student-name');
+                const sid = sidInput.value.trim();
+                const name = nameInput.value.trim();
+                const track = state.track;
+
+                if (!/^202[3-6]\d{5}$/.test(sid)) {
+                    alert('올바른 학번 형식을 입력하세요 (2023~2026학번)');
+                    return false;
+                }
+                if (!name) { alert('이름을 입력하세요'); return false; }
+                if (!track) { alert('과정을 선택하세요'); return false; }
+
+                // If user identity changed, reset session progress
+                if (state.studentId && (state.studentId !== sid || state.name !== name)) {
+                    state.maxReachedStep = 1;
+                    document.querySelectorAll('.step-container').forEach((el, idx) => {
+                        if (idx > 0) el.classList.remove('done');
+                    });
+                }
+
+                state.studentId = sid;
+                state.name = name;
+            }
+
+            // Validation: Moving to Step 3 (First time or if courses cleared)
+            if (step === 3 && state.maxReachedStep < 3) {
+                const courses = Array.from(document.querySelectorAll('.course-input')).map(sel => sel.value).filter(v => v);
+                if (courses.length === 0) {
+                    alert('최소 하나 이상의 이수 과목을 입력해야 사정 결과를 조회할 수 있습니다.');
+                    return false;
+                }
+            }
+
+            // Step specific initializations
+            if (step === 2) {
+                initStep2();
+                loadData();
+            }
+            if (step === 3) {
+                if (!document.getElementById('semesters-container').children.length) {
+                    initStep2();
+                    loadData();
+                }
+                saveData();
+                calculateResult();
+            }
+
+            // Update max reached step
+            if (step > state.maxReachedStep) {
+                state.maxReachedStep = step;
+            }
+
+            if (pushHistory) {
+                history.pushState({ step: step }, null, "");
+            }
+
+            // UI Update
+            document.getElementById(`step-${state.currentStep}`).classList.add('hidden');
+            document.getElementById(`step-cont-${state.currentStep}`).classList.remove('active');
+
+            // Manage 'done' markers
+            if (state.maxReachedStep >= 3) {
+                // If we've reached step 3, keep previous steps as done
+                for (let i = 1; i <= 3; i++) {
+                    const el = document.getElementById(`step-cont-${i}`);
+                    if (!el) continue;
+                    if (i < step) {
+                        el.classList.add('done');
+                        el.classList.remove('active');
+                    } else if (i === step) {
+                        el.classList.remove('done');
+                        el.classList.add('active');
+                    } else {
+                        // For steps > current, they can be done or not. 
+                        // Usually in freedom mode, we show them as reachable.
+                        el.classList.remove('active');
+                    }
+                }
+            } else {
+                if (state.currentStep < step) {
+                    for (let i = state.currentStep; i < step; i++) {
+                        const el = document.getElementById(`step-cont-${i}`);
+                        if (el) el.classList.add('done');
+                    }
+                } else {
+                    for (let i = step; i <= 3; i++) {
+                        const el = document.getElementById(`step-cont-${i}`);
+                        if (el) el.classList.remove('done');
+                    }
+                }
+            }
+
+            state.currentStep = step;
+            document.getElementById(`step-${step}`).classList.remove('hidden');
+            document.getElementById(`step-cont-${step}`).classList.add('active');
+            window.scrollTo(0, 0);
+            return true;
+        }
+
+        function initStep2() {
+            const trackInfo = CONFIG.tracks[state.track];
+            if (trackInfo) {
+                document.getElementById('step2-track-name').innerText = trackInfo.name;
+            }
+
+            // Always re-initialize to ensure proper UI updates when track changes
+            state.lastInitializedTrack = state.track;
+            state.extraSemesters = 0; // Reset extra semesters
+
+            // Clear all checkboxes in Step 2 to prevent state bleed
+            document.querySelectorAll('#step-2 input[type="checkbox"]').forEach(chk => {
+                chk.checked = false;
+            });
+
+            // Recognition logic (Only for yangseong)
+            const recArea = document.getElementById('recognition-area');
+            if (state.track.startsWith('yangseong')) {
+                recArea.classList.remove('hidden');
+                const recList = document.getElementById('recognition-list');
+                recList.innerHTML = CONFIG.areas.map(a => `
+                <label class="checkbox-container">${a.name}
+                    <input type="checkbox" class="rec-check" data-area="${a.id}" onchange="limitRecognition(this)"><span class="checkmark"></span>
+                </label>
+            `).join('');
+            } else {
+                recArea.classList.add('hidden');
+            }
+
+            // Semesters
+            const container = document.getElementById('semesters-container');
+            const semCount = trackInfo.semesters;
+            container.innerHTML = '';
+            for (let i = 1; i <= semCount; i++) {
+                addSemesterUI(i, container);
+            }
+
+            // ... (rest of search dropdown logic)
+
+            // Close dropdown on click outside
+            if (!window.dropdownListenerAdded) {
+                document.addEventListener('click', (e) => {
+                    if (!e.target.classList.contains('course-input') && !e.target.closest('.dropdown-list')) {
+                        hideAllDropdowns();
+                    }
+                });
+                window.dropdownListenerAdded = true;
+            }
+
+            // Paper steps
+            const paperType = trackInfo.type;
+            document.getElementById('paper-type-label').innerText = paperType === 'thesis' ? '학위논문' : '무논문 연구보고서';
+            const paperSteps = document.getElementById('paper-checklist');
+
+            const createPaperItem = (id, label, link = null) => {
+                const linkHtml = link ? ` <a href="${link}" target="_blank" class="guide-link" style="padding: 2px 6px; font-size: 0.7rem; margin-left: 5px;" onclick="event.stopPropagation()">안내</a>` : '';
+                return `<label class="checkbox-container">${label}${linkHtml}<input type="checkbox" id="paper-step${id}" class="paper-step-check" data-step-id="${id}" onchange="handlePaperStepChange(this)"><span class="checkmark"></span></label>`;
+            };
+
+            const thesisLinks = {
+                apply: "https://egc.cnu.ac.kr/egc/board/notice.do?mode=view&articleNo=554634&article.offset=0&articleLimit=15&srSearchVal=%EC%A7%80%EB%8F%84%EA%B5%90%EC%88%98",
+                receipt: "https://egc.cnu.ac.kr/egc/board/notice.do?mode=view&articleNo=561807&article.offset=0&articleLimit=15&srSearchVal=%EB%AC%B4%EB%85%BC%EB%AC%B8",
+                license: "https://egc.cnu.ac.kr/egc/board/notice.do?mode=view&articleNo=561820&article.offset=0&articleLimit=15&srSearchVal=%EB%AC%B4%EB%85%BC%EB%AC%B8",
+                exam: "https://egc.cnu.ac.kr/egc/board/notice.do?mode=view&articleNo=564990&article.offset=0&articleLimit=15&srSearchVal=%EB%AC%B4%EB%85%BC%EB%AC%B8",
+                final: "https://egc.cnu.ac.kr/egc/board/notice.do?mode=view&articleNo=571515&article.offset=0&articleLimit=15&srSearchVal=%EB%85%BC%EB%AC%B8"
+            };
+
+            const reportLinks = {
+                apply: "https://egc.cnu.ac.kr/egc/board/notice.do?mode=view&articleNo=554634&article.offset=0&articleLimit=15&srSearchVal=%EC%A7%80%EB%8F%84%EA%B5%90%EC%88%98",
+                receipt: "https://egc.cnu.ac.kr/egc/board/notice.do?mode=view&articleNo=561812&article.offset=0&articleLimit=15&srSearchVal=%EB%AC%B4%EB%85%BC%EB%AC%B8",
+                license: "https://egc.cnu.ac.kr/egc/board/notice.do?mode=view&articleNo=561820&article.offset=0&articleLimit=15&srSearchVal=%EB%AC%B4%EB%85%BC%EB%AC%B8",
+                exam: "https://egc.cnu.ac.kr/egc/board/notice.do?mode=view&articleNo=564990&article.offset=0&articleLimit=15&srSearchVal=%EB%AC%B4%EB%85%BC%EB%AC%B8",
+                binding: "https://egc.cnu.ac.kr/egc/board/notice.do?mode=view&articleNo=574383&article.offset=0&articleLimit=15&srSearchVal=%EB%AC%B4%EB%85%BC%EB%AC%B8"
+            };
+
+            if (paperType === 'report') {
+                paperSteps.innerHTML = [
+                    createPaperItem(1, "지도교수 선정", reportLinks.apply),
+                    createPaperItem(2, "보고서 주제 선정"),
+                    createPaperItem(3, "접수", reportLinks.receipt),
+                    createPaperItem(4, "교원자격무시험검정원서 제출", reportLinks.license),
+                    createPaperItem(5, "예비심사 통과", reportLinks.exam),
+                    createPaperItem(6, "본심사 통과", reportLinks.exam),
+                    createPaperItem(7, "소프트커버 제본 제출", reportLinks.binding)
+                ].join('');
+            } else {
+                paperSteps.innerHTML = [
+                    createPaperItem(1, "지도교수 신청", thesisLinks.apply),
+                    createPaperItem(2, "논문 주제 선정"),
+                    createPaperItem(3, "접수", thesisLinks.receipt),
+                    createPaperItem(4, "교원자격무시험검정원서 제출", thesisLinks.license),
+                    createPaperItem(5, "예비심사 통과", thesisLinks.exam),
+                    createPaperItem(6, "본심사 통과", thesisLinks.exam),
+                    createPaperItem(7, "원본파일(pdf) 제출", thesisLinks.final),
+                    createPaperItem(8, "인준서 원본 제출", thesisLinks.final),
+                    createPaperItem(9, "학위논문제출확인서 제출", thesisLinks.final),
+                    createPaperItem(10, "표절 검사 제출", thesisLinks.final),
+                    createPaperItem(11, "통합정보시스템 업로드", thesisLinks.final),
+                    createPaperItem(12, "원문 파일 제출", thesisLinks.final)
+                ].join('');
+            }
+
+
+            // Other requirements auto-save (Static ones are handled by onchange in HTML)
+            document.querySelectorAll('#step-2 input[type="checkbox"]:not(.paper-step-check):not([id*="cpr"]):not([id*="apt"])').forEach(chk => {
+                chk.removeEventListener('change', saveData); // Avoid duplicates
+                chk.addEventListener('change', saveData);
+            });
+
+            document.querySelectorAll('.course-input').forEach(input => {
+                input.removeEventListener('change', saveData);
+                input.addEventListener('change', () => {
+                    saveData();
+                    updateSemesterCredits();
+                });
+            });
+
+            updateSemesterCredits();
+
+            // Hide/Show mandatory requirements based on track
+            const isRetraining = state.track.startsWith('retraining');
+            const isMinor = state.track.startsWith('minor');
+            const isYangseong = state.track.startsWith('yangseong');
+
+            // Gender, CPR, Aptitude (Required for Yangseong and Minor, NOT for Retraining)
+            const genderSec = document.getElementById('section-gender');
+            const cprSec = document.getElementById('section-cpr');
+            const aptSec = document.getElementById('section-apt');
+
+            if (isRetraining) {
+                if (genderSec) genderSec.classList.add('hidden');
+                if (cprSec) cprSec.classList.add('hidden');
+                if (aptSec) aptSec.classList.add('hidden');
+            } else {
+                // Yangseong and Minor show these
+                if (genderSec) genderSec.classList.remove('hidden');
+                if (cprSec) cprSec.classList.remove('hidden');
+                if (aptSec) aptSec.classList.remove('hidden');
+            }
+
+            // Education Practice (Required ONLY for Yangseong)
+            const practiceSec = document.getElementById('section-edu-practice');
+            if (practiceSec) {
+                if (isYangseong) practiceSec.classList.remove('hidden');
+                else practiceSec.classList.add('hidden');
+            }
+
+            // Renumber requirements in Step 2 UI
+            let reqNumber = 1;
+            const allReqHeaders = [
+                { id: 'req-h1', text: '수업 및 학점', icon: 'book-open', link: 'https://techedu.cnu.ac.kr/techedu/edu/notice.do?mode=view&articleNo=289290&article.offset=0&articleLimit=10&srSearchVal=%ED%95%99%EC%82%AC%EC%A7%80%EB%8F%84', phones: [{ text: '기술교육과', num: '042-821-5691' }, { text: '교육대학원', num: '042-821-5252' }] },
+                { id: 'req-h2', text: '성인지교육', icon: 'users', sectionId: 'section-gender' },
+                { id: 'req-h3', text: '연구윤리', icon: 'shield-check' },
+                { id: 'req-h4', text: '심폐소생술', icon: 'heart-pulse', sectionId: 'section-cpr' },
+                { id: 'req-h5', text: '교직 적성 및 인성 검사', icon: 'clipboard-check', sectionId: 'section-apt' },
+                { id: 'req-h6', text: '종합시험 합격', icon: 'edit-3' },
+                { id: 'req-h-practice', text: '교육봉사 및 교육실습', icon: 'graduation-cap', sectionId: 'section-edu-practice' },
+                { id: 'req-h7', text: '', icon: 'file-text' } // Paper type is handled separately
+            ];
+
+            allReqHeaders.forEach(h => {
+                const el = document.getElementById(h.id);
+                if (!el) return;
+                const section = h.sectionId ? document.getElementById(h.sectionId) : el.closest('div[style*="margin-bottom"]');
+
+                if (section && section.classList.contains('hidden')) {
+                    // This section is hidden, skip renumbering
+                } else {
+                    let label = h.text;
+                    if (h.id === 'req-h7') label = document.getElementById('paper-type-label').innerText;
+
+                    let guideHtml = '';
+                    if (h.link) {
+                        guideHtml += `<a href="${h.link}" target="_blank" class="guide-link" style="margin-left:auto; font-size:0.75rem;"><i data-lucide="external-link" style="width:12px;height:12px;"></i> 안내</a>`;
+                    }
+                    if (h.phones) {
+                        h.phones.forEach((p, idx) => {
+                            guideHtml += `<a href="tel:${p.num}" class="guide-link" style="margin-left:${(idx === 0 && !h.link) ? 'auto' : '8px'}; font-size:0.75rem;"><i data-lucide="phone" style="width:12px;height:12px;"></i> ${p.text}: ${p.num}</a>`;
+                        });
+                    }
+
+                    el.innerHTML = `<i data-lucide="${h.icon}" style="vertical-align: middle;"></i> 졸업요건${reqNumber}. ${label}${guideHtml}`;
+
+                    // Style adjustments to keep links aligned
+                    const headerWrapper = el.parentElement;
+                    if (headerWrapper && headerWrapper.classList.contains('section-header-shaded')) {
+                        headerWrapper.style.display = 'flex';
+                        headerWrapper.style.justifyContent = 'space-between';
+                        headerWrapper.style.alignItems = 'center';
+                        el.style.flex = '1';
+                        el.style.display = 'flex';
+                        el.style.alignItems = 'center';
+                        el.style.gap = '8px';
+                    }
+
+                    reqNumber++;
+                }
+            });
+            lucide.createIcons();
+        }
+
+        function addSemesterUI(num, container, isExtra = false) {
+            const semDiv = document.createElement('div');
+            semDiv.className = 'semester-card' + (isExtra ? ' extra-semester' : '');
+            if (isExtra) semDiv.style.border = "1.5px dashed var(--accent)";
+            semDiv.innerHTML = `
+                <div class="semester-title" style="${isExtra ? 'color: var(--accent);' : ''}">
+                    ${isExtra ? '추가 ' : ''}${num}학기 <span>최대 6학점</span>
+                </div>
+                <div class="course-slot autocomplete-container"><input type="text" class="course-input" data-sem="${num}" placeholder="과목 입력 또는 선택" onfocus="showDropdown(this)" oninput="filterDropdown(this)"></div>
+                <div class="course-slot autocomplete-container"><input type="text" class="course-input" data-sem="${num}" placeholder="과목 입력 또는 선택" onfocus="showDropdown(this)" oninput="filterDropdown(this)"></div>
+                <div class="course-slot autocomplete-container"><input type="text" class="course-input" data-sem="${num}" placeholder="과목 입력 또는 선택" onfocus="showDropdown(this)" oninput="filterDropdown(this)"></div>
+                <div class="semester-footer" id="sem-total-${num}">학기 합계: <span>0</span> 학점 ${isExtra ? '<button onclick="removeExtraSem(' + num + ')" style="font-size:0.7rem; color:var(--danger); border:none; background:none; cursor:pointer; margin-left:10px;">삭제</button>' : ''}</div>
+            `;
+            container.appendChild(semDiv);
+
+            // Add listeners to new inputs
+            semDiv.querySelectorAll('.course-input').forEach(input => {
+                input.addEventListener('change', () => {
+                    saveData();
+                    updateSemesterCredits();
+                });
+            });
+        }
+
+        function addExtraSemester() {
+            const trackInfo = CONFIG.tracks[state.track];
+            const currentTotalSems = trackInfo.semesters + state.extraSemesters;
+            if (currentTotalSems >= 9) {
+                alert('최대 9학기까지만 등록 가능합니다.');
+                return;
+            }
+            state.extraSemesters++;
+            const container = document.getElementById('semesters-container');
+            addSemesterUI(currentTotalSems + 1, container, true);
+            lucide.createIcons();
+            saveData();
+            updateSemesterCredits();
+        }
+
+        function removeExtraSem(num) {
+            const semCard = document.querySelector(`.course-input[data-sem="${num}"]`).closest('.semester-card');
+            if (semCard) {
+                semCard.remove();
+                state.extraSemesters--;
+                saveData();
+                updateSemesterCredits();
+            }
+        }
+
+        function updateSemesterCredits() {
+            const trackInfo = CONFIG.tracks[state.track];
+            if (!trackInfo) return;
+
+            const inputs = document.querySelectorAll('.course-input');
+            const totals = {};
+            let grandTotal = 0;
+            let majorTotal = 0;
+            let eduTotal = 0;
+
+            const eduSet = new Set(CONFIG.edu_subjects);
+
+            inputs.forEach(input => {
+                const sem = input.getAttribute('data-sem');
+                if (!totals[sem]) totals[sem] = 0;
+                const val = input.value.trim();
+                if (val) {
+                    totals[sem] += 2;
+                    grandTotal += 2;
+                    if (eduSet.has(val)) {
+                        eduTotal += 2;
+                    } else {
+                        majorTotal += 2;
+                    }
+                }
+            });
+
+            for (let sem in totals) {
+                const el = document.getElementById(`sem-total-${sem}`);
+                if (el) el.querySelector('span').innerText = totals[sem];
+            }
+
+            // Update Detailed Credits in Step 2
+            const majorTarget = trackInfo.major;
+            const eduTarget = trackInfo.edu;
+            const totalTarget = trackInfo.total;
+
+            const updateCard = (prefix, current, target) => {
+                const currEl = document.getElementById(`${prefix}-curr`);
+                const targetEl = document.getElementById(`${prefix}-target`);
+                const barEl = document.getElementById(`${prefix}-bar`);
+                if (currEl) {
+                    currEl.innerText = current;
+                    currEl.className = current >= target ? 'credit-text-blue' : 'credit-text-red';
+                }
+                if (targetEl) targetEl.innerText = target;
+                if (barEl) {
+                    const percent = target > 0 ? Math.min(100, (current / target) * 100) : 100;
+                    barEl.style.width = `${percent}%`;
+                }
+            };
+
+            updateCard('major', majorTotal, majorTarget);
+            updateCard('edu', eduTotal, eduTarget);
+            updateCard('total', grandTotal, totalTarget);
+
+            // Hide/Show Teaching card if target is 0 (Minor tracks)
+            const eduCard = document.getElementById('card-edu-credits');
+            if (eduCard) {
+                eduCard.style.display = eduTarget === 0 ? 'none' : 'flex';
+                // Adjust grid template columns if 2 items
+                const grid = document.getElementById('credit-summary-step2');
+                if (grid) {
+                    grid.style.gridTemplateColumns = eduTarget === 0 ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)';
+                }
+            }
+
+            // Show 'Add Extra Semester' button only if credits < totalTarget
+            const btnContainer = document.getElementById('extra-semester-btn-container');
+            if (grandTotal < totalTarget) {
+                btnContainer.classList.remove('hidden');
+            } else {
+                btnContainer.classList.remove('hidden');
+            }
+        }
+
+        function getCategorizedSubjects(includeEdu) {
+            let subjects = [];
+
+            // 1. 기본이수교과
+            CONFIG.basic_areas.forEach(s => subjects.push({ name: s, cat: '기본이수', cls: 'basic' }));
+            // 2. 교과교육영역
+            CONFIG.essentials.filter(s => s !== '기술교육론').forEach(s => subjects.push({ name: s, cat: '교과교육', cls: 'essential' }));
+            // 기술교육론 is overlap, ensure unique names in display or specific labeling. 
+            // The prompt says order: 기본이수 -> 교과교육 -> 일반전공 -> 교직.
+            // If it's both, let's treat it as basic or essential. Let's make it easy.
+
+            // Build unique list with categories
+            const uniqueList = [];
+            const seen = new Set();
+
+            const add = (name, cat, cls) => {
+                if (seen.has(name)) return;
+                seen.add(name);
+                uniqueList.push({ name, cat, cls });
+            };
+
+            CONFIG.basic_areas.forEach(s => add(s, '기본이수', 'basic'));
+            CONFIG.essentials.forEach(s => add(s, '교과교육', 'essential'));
+            CONFIG.major_subjects.forEach(s => add(s, '일반전공', 'major'));
+            if (includeEdu) CONFIG.edu_subjects.forEach(s => add(s, '교직과목', 'edu'));
+
+            return uniqueList;
+        }
+
+        function showDropdown(input) {
+            hideAllDropdowns();
+            const container = input.parentElement;
+            const trackInfo = CONFIG.tracks[state.track];
+            const subjects = getCategorizedSubjects(trackInfo.edu > 0);
+
+            createDropdown(container, input, subjects);
+        }
+
+        function filterDropdown(input) {
+            const container = input.parentElement;
+            const val = input.value.toLowerCase();
+            const trackInfo = CONFIG.tracks[state.track];
+            const subjects = getCategorizedSubjects(trackInfo.edu > 0).filter(s => s.name.toLowerCase().includes(val));
+
+            createDropdown(container, input, subjects);
+        }
+
+        function createDropdown(container, input, subjects) {
+            let list = container.querySelector('.dropdown-list');
+            if (list) list.remove();
+
+            list = document.createElement('div');
+            list.className = 'dropdown-list';
+
+            // Adjust positioning if too close to right edge
+            const rect = input.getBoundingClientRect();
+            if (rect.left + 800 > window.innerWidth) {
+                list.classList.add('align-right');
+            }
+
+            // Group subjects
+            const groups = {
+                basic: { title: '기본이수', items: [] },
+                essential: { title: '교과교육', items: [] },
+                major: { title: '일반전공', items: [] },
+                edu: { title: '교직과목', items: [] }
+            };
+
+            subjects.forEach(s => {
+                if (groups[s.cls]) groups[s.cls].items.push(s);
+            });
+
+            // Get currently selected subjects to mark duplicates
+            const selectedSubjects = new Set(
+                Array.from(document.querySelectorAll('.course-input'))
+                    .map(inp => inp.value.trim())
+                    .filter(v => v !== '' && v !== input.value.trim())
+            );
+
+            const categories = ['basic', 'essential', 'major', 'edu'];
+            let hasResults = false;
+
+            categories.forEach(catId => {
+                const group = groups[catId];
+                if (group.items.length > 0) hasResults = true;
+
+                const col = document.createElement('div');
+                col.className = 'dropdown-column';
+                col.innerHTML = `<div class="column-header">${group.title}</div>`;
+
+                group.items.forEach(s => {
+                    const isDuplicate = selectedSubjects.has(s.name);
+                    const item = document.createElement('div');
+                    item.className = 'dropdown-item' + (isDuplicate ? ' disabled' : '');
+                    item.innerHTML = `
+                        <span class="subject-name color-${s.cls}">${s.name}</span>
+                        <span class="subject-meta">2학점</span>
+                    `;
+
+                    if (!isDuplicate) {
+                        item.onclick = (e) => {
+                            e.stopPropagation();
+                            input.value = s.name;
+                            input.dispatchEvent(new Event('change'));
+                            hideAllDropdowns();
+                        };
+                    } else {
+                        item.title = "이미 선택된 과목입니다.";
+                    }
+                    col.appendChild(item);
+                });
+                list.appendChild(col);
+            });
+
+            if (!hasResults) {
+                list.style.display = 'block';
+                list.style.width = '200px';
+                list.innerHTML = '<div style="padding:10px; text-align:center; color:var(--text-muted);">검색 결과 없음</div>';
+            }
+
+            container.appendChild(list);
+            lucide.createIcons();
+        }
+
+        function hideAllDropdowns() {
+            document.querySelectorAll('.dropdown-list').forEach(l => l.remove());
+        }
+
+        function limitRecognition(el) {
+            const checked = document.querySelectorAll('.rec-check:checked');
+            if (checked.length > 3) {
+                el.checked = false;
+                alert('학부 인정은 최대 3과목(6학점)까지만 가능합니다.');
+            }
+            saveData();
+        }
+
+        function saveData() {
+            if (!state.studentId) return;
+            const dataToSave = {
+                track: state.track,
+                recognition: Array.from(document.querySelectorAll('.rec-check:checked')).map(chk => chk.getAttribute('data-area')),
+                courses: Array.from(document.querySelectorAll('.course-input')).map(input => ({
+                    val: input.value,
+                    sem: input.getAttribute('data-sem')
+                })),
+                extraSemesters: state.extraSemesters,
+                checks: {
+                    gender1: document.getElementById('check-gender1').checked,
+                    gender2: document.getElementById('check-gender2').checked,
+                    ethics: document.getElementById('check-ethics').checked,
+                    cpr1: document.getElementById('check-cpr1').checked,
+                    cpr2: document.getElementById('check-cpr2').checked,
+                    apt1: document.getElementById('check-apt1').checked,
+                    apt2: document.getElementById('check-apt2').checked,
+                    examEdu: document.getElementById('exam-edu').checked,
+                    examTec: document.getElementById('exam-tecedu').checked,
+                    examCon: document.getElementById('exam-construct').checked,
+                    examElec: document.getElementById('exam-elec').checked,
+                    eduServiceNA: document.getElementById('check-edu-service-na').checked,
+                    eduService60: document.getElementById('check-edu-service-60').checked,
+                    teachingPracticeNA: document.getElementById('check-teaching-practice-na').checked,
+                    teachingPractice1: document.getElementById('check-teaching-practice-1').checked
+                },
+                paperSteps: Array.from(document.querySelectorAll('#paper-checklist input')).map(i => i.checked),
+                maxReachedStep: state.maxReachedStep
+            };
+            localStorage.setItem(`CNU_GRAD_DATA_${state.studentId}_${state.name}`, JSON.stringify(dataToSave));
+            console.log('Data saved for', state.studentId);
+        }
+
+        function loadData() {
+            const saved = localStorage.getItem(`CNU_GRAD_DATA_${state.studentId}_${state.name}`);
+            if (!saved) return;
+            const data = JSON.parse(saved);
+
+            // If track changed, we ONLY load identity but SKIP courses and progress to avoid inconsistency
+            const trackMismatch = data.track && data.track !== state.track;
+            if (trackMismatch) {
+                console.log('Saved data is for a different track. Starting fresh for:', state.track);
+                return; // Do not load courses, checks, or progress from a different track
+            }
+
+            // Hydrate Recognition
+            if (data.recognition) {
+                data.recognition.forEach(areaId => {
+                    const chk = document.querySelector(`.rec-check[data-area="${areaId}"]`);
+                    if (chk) chk.checked = true;
+                });
+            }
+
+            // Hydrate Courses
+            if (data.courses) {
+                const container = document.getElementById('semesters-container');
+                const trackInfo = CONFIG.tracks[state.track];
+
+                // Add extra semester panels if saved
+                if (data.extraSemesters) {
+                    for (let i = 1; i <= data.extraSemesters; i++) {
+                        addSemesterUI(trackInfo.semesters + i, container, true);
+                    }
+                    state.extraSemesters = data.extraSemesters;
+                }
+
+                // Fill inputs
+                const semMap = {};
+                data.courses.forEach(item => {
+                    if (!semMap[item.sem]) semMap[item.sem] = [];
+                    semMap[item.sem].push(item.val);
+                });
+
+                for (let sem in semMap) {
+                    const semInputs = document.querySelectorAll(`.course-input[data-sem="${sem}"]`);
+                    semMap[sem].forEach((val, idx) => {
+                        if (semInputs[idx]) semInputs[idx].value = val;
+                    });
+                }
+                updateSemesterCredits();
+            }
+
+            // Hydrate Checks
+            if (data.checks) {
+                document.getElementById('check-gender1').checked = !!data.checks.gender1;
+                document.getElementById('check-gender2').checked = !!data.checks.gender2;
+                document.getElementById('check-ethics').checked = !!data.checks.ethics;
+                document.getElementById('check-cpr1').checked = !!data.checks.cpr1;
+                document.getElementById('check-cpr2').checked = !!data.checks.cpr2;
+                document.getElementById('check-apt1').checked = !!data.checks.apt1;
+                document.getElementById('check-apt2').checked = !!data.checks.apt2;
+                document.getElementById('exam-edu').checked = !!data.checks.examEdu;
+                document.getElementById('exam-tecedu').checked = !!data.checks.examTec;
+                document.getElementById('exam-construct').checked = !!data.checks.examCon;
+                document.getElementById('exam-elec').checked = !!data.checks.examElec;
+                if (data.checks.eduServiceNA !== undefined) document.getElementById('check-edu-service-na').checked = !!data.checks.eduServiceNA;
+                if (data.checks.eduService60 !== undefined) document.getElementById('check-edu-service-60').checked = !!data.checks.eduService60;
+                if (data.checks.teachingPracticeNA !== undefined) document.getElementById('check-teaching-practice-na').checked = !!data.checks.teachingPracticeNA;
+                if (data.checks.teachingPractice1 !== undefined) document.getElementById('check-teaching-practice-1').checked = !!data.checks.teachingPractice1;
+            }
+
+            if (data.paperSteps) {
+                const pSteps = document.querySelectorAll('#paper-checklist input');
+                data.paperSteps.forEach((val, idx) => {
+                    if (pSteps[idx]) pSteps[idx].checked = !!val;
+                });
+            }
+
+            // Hydrate Max Reached Step
+            if (data.maxReachedStep && data.maxReachedStep > state.maxReachedStep) {
+                state.maxReachedStep = data.maxReachedStep;
+                // Re-apply done markers for loaded progress
+                for (let i = 1; i < state.maxReachedStep; i++) {
+                    const el = document.getElementById(`step-cont-${i}`);
+                    if (el) el.classList.add('done');
+                }
+            }
+            console.log('Data loaded for', state.studentId);
+        }
+
+        function calculateResult() {
+            const trackInfo = CONFIG.tracks[state.track];
+            const courses = Array.from(document.querySelectorAll('.course-input')).map(sel => sel.value).filter(v => v);
+            let uniqueCourses = new Set();
+            let hasDuplicate = false;
+            courses.forEach(c => {
+                if (uniqueCourses.has(c)) hasDuplicate = true;
+                uniqueCourses.add(c);
+            });
+
+            // 1. Credit Check per category
+            let credits = {
+                basic: 0,
+                essential: 0,
+                major: 0,
+                edu: 0
+            };
+
+            const basicSet = new Set(CONFIG.basic_areas);
+            const essentialSet = new Set(CONFIG.essentials);
+
+            uniqueCourses.forEach(c => {
+                if (basicSet.has(c)) credits.basic += 2;
+                else if (essentialSet.has(c)) credits.essential += 2;
+                else if (CONFIG.major_subjects.includes(c)) credits.major += 2;
+                else if (CONFIG.edu_subjects.includes(c)) credits.edu += 2;
+            });
+
+            const totalMajor = credits.basic + credits.essential + credits.major;
+            const totalEdu = credits.edu;
+            const totalCredits = totalMajor + totalEdu;
+
+            // 2. Areas Check
+            let satisfiedAreas = new Set();
+            // Check recognition
+            if (state.track.startsWith('yangseong')) {
+                document.querySelectorAll('.rec-check:checked').forEach(chk => {
+                    satisfiedAreas.add(chk.getAttribute('data-area'));
+                });
+            }
+            // Check taken courses
+            uniqueCourses.forEach(c => {
+                CONFIG.areas.forEach(a => {
+                    if (a.subjects.includes(c)) satisfiedAreas.add(a.id);
+                });
+            });
+
+            // 3. Essential Check
+            let satisfiedEssentials = CONFIG.essentials.filter(e => uniqueCourses.has(e));
+
+            // 4. Extras Check
+            const isRetraining = state.track.startsWith('retraining');
+            const isMinor = state.track.startsWith('minor');
+            const isYangseong = state.track.startsWith('yangseong');
+
+            const checks = {
+                gender: isRetraining || (document.getElementById('check-gender1').checked && document.getElementById('check-gender2').checked),
+                ethics: document.getElementById('check-ethics').checked,
+                cpr: isRetraining || (document.getElementById('check-cpr1').checked && document.getElementById('check-cpr2').checked),
+                apt: isRetraining || (document.getElementById('check-apt1').checked && document.getElementById('check-apt2').checked),
+                exam: document.getElementById('exam-edu').checked && document.getElementById('exam-tecedu').checked &&
+                    document.getElementById('exam-construct').checked && document.getElementById('exam-elec').checked,
+                eduPractice: isYangseong ?
+                    ((document.getElementById('check-edu-service-na').checked || document.getElementById('check-edu-service-60').checked) &&
+                        (document.getElementById('check-teaching-practice-na').checked || document.getElementById('check-teaching-practice-1').checked))
+                    : true // Retraining and Minor don't need this
+            };
+
+            // 5. Paper Steps Check
+            const paperItems = Array.from(document.querySelectorAll('#paper-checklist input'));
+            const paperDone = paperItems.every(i => i.checked);
+
+            const creditPass = totalCredits >= trackInfo.total && totalMajor >= trackInfo.major && totalEdu >= trackInfo.edu && !hasDuplicate;
+
+            // Areas check restructured: 5 basic + 1 essential (all 3 subjects)
+            const basicAreasCount = satisfiedAreas.size;
+            const essentialPass = CONFIG.essentials.every(e => uniqueCourses.has(e));
+            const totalRequirementsCount = basicAreasCount + (essentialPass ? 1 : 0);
+
+            // Retraining tracks do not need area checks
+            const areasPass = isRetraining ? true : totalRequirementsCount === 6;
+            const areasDisplayCount = isRetraining ? "-" : totalRequirementsCount;
+            const areasDisplayTarget = isRetraining ? "-" : "6";
+
+            // Requirement 1 Pass condition: Both Credits AND Areas must be met
+            const req1Pass = creditPass && areasPass;
+            const extraPass = Object.values(checks).every(v => v) && paperDone;
+
+            // Update UI
+            const isAllPass = req1Pass && extraPass; // Fixed: Use req1Pass
+            const statusLabel = isAllPass
+                ? '<span style="color: var(--success); font-weight: 800;">[졸업 요건 충족]</span>'
+                : '<span style="color: var(--danger); font-weight: 800;">[졸업 요건 미충족]</span>';
+
+            document.getElementById('res-name').innerHTML = `${state.name} 님 ${statusLabel}`;
+            document.getElementById('res-track').innerText = trackInfo.name;
+            document.getElementById('res-id').innerText = state.studentId;
+            document.getElementById('req-credits').innerText = trackInfo.total;
+            document.getElementById('curr-credits').innerText = totalCredits;
+
+            const creditStatus = document.getElementById('credit-status');
+            creditStatus.className = 'status-pill ' + (creditPass ? 'status-pass' : 'status-fail');
+            creditStatus.innerText = creditPass ? '이수 완료' : (hasDuplicate ? '과목 중복' : '미충족');
+
+            // Find the area-status div in the newly injected HTML and update it if needed (though it's already injected correctly now)
+            // But since we are using innerHTML for the dashboard, we should ensure the initial injection is correct.
+            const dashboardContainer = document.querySelector('.result-dashboard');
+            if (isRetraining) {
+                const creditDisplay = `${trackInfo.major}+${trackInfo.edu}`;
+                dashboardContainer.innerHTML = `
+                    <div class="stat-card" style="grid-column: span 2;">
+                        <div class="stat-label">이수 학점 (기준: <span id="req-credits">${creditDisplay}</span>)</div>
+                        <div class="stat-value"><span id="curr-credits">${totalCredits}</span></div>
+                        <div id="credit-status" class="status-pill ${creditPass ? 'status-pass' : 'status-fail'}">${creditPass ? '이수 완료' : (hasDuplicate ? '과목 중복' : '미충족')}</div>
+                        <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 10px;">* 재교육 과정은 전공(${trackInfo.major}) 및 교직(${trackInfo.edu}) 학점을 각각 충족해야 하며, 별도의 기본이수/교과교육 영역 조건은 없습니다.</p>
+                    </div>
+                `;
+            } else {
+                dashboardContainer.innerHTML = `
+                    <div class="stat-card">
+                        <div class="stat-label">이수 학점 (기준: <span id="req-credits">${trackInfo.total}</span>)</div>
+                        <div class="stat-value"><span id="curr-credits">${totalCredits}</span></div>
+                        <div id="credit-status" class="status-pill ${creditPass ? 'status-pass' : 'status-fail'}">${creditPass ? '이수 완료' : (hasDuplicate ? '과목 중복' : '미충족')}</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">필수 요건 충족 (기본 5 + 교과 1)</div>
+                        <div class="stat-value"><span id="curr-areas">${areasDisplayCount}</span><span
+                                style="font-size: 1rem; color: var(--text-muted);">/${areasDisplayTarget}</span></div>
+                        <div id="area-status" class="status-pill ${areasPass ? 'status-pass' : 'status-fail'}">${areasPass ? '전부 충족' : '일부 미비'}</div>
+                    </div>
+                `;
+            }
+
+            const links = {
+                gender: "https://egc.cnu.ac.kr/egc/board/notice.do?mode=view&articleNo=288590&article.offset=0&articleLimit=15&srSearchVal=%EC%84%B1%EC%9D%B8%EC%A7%80%EA%B5%90%EC%9C%A1",
+                ethics: "https://egc.cnu.ac.kr/egc/board/notice.do?mode=view&articleNo=538237&article.offset=0&articleLimit=15&srSearchVal=%EC%97%B0%EA%B5%AC%EC%9C%A4%EB%A6%AC",
+                cpr: "https://egc.cnu.ac.kr/egc/board/notice.do?mode=view&articleNo=569225&article.offset=0&articleLimit=15&srSearchVal=%EC%8B%AC%ED%8F%90%EC%86%8C%EC%83%9D",
+                apt: "https://egc.cnu.ac.kr/egc/board/notice.do?mode=view&articleNo=566109&article.offset=0&articleLimit=15&srSearchVal=%EC%A0%81%EC%84%B1",
+                exam: "https://egc.cnu.ac.kr/egc/board/notice.do?mode=view&articleNo=573353&article.offset=0&articleLimit=15&srSearchVal=%EC%A2%85%ED%95%A9%EC%8B%9C%ED%97%98",
+                credits: "https://techedu.cnu.ac.kr/techedu/edu/notice.do?mode=view&articleNo=289290&article.offset=0&articleLimit=10&srSearchVal=%ED%95%99%EC%82%AC%EC%A7%80%EB%8F%84"
+            };
+
+            const paperLabel = trackInfo.type === 'thesis' ? '학위논문' : '연구보고서';
+
+            const creditDist = trackInfo.edu > 0
+                ? `(전공 ${trackInfo.major} + 교직 ${trackInfo.edu})`
+                : `(전공 ${trackInfo.major})`;
+
+            const requirements = [
+                {
+                    id: 1,
+                    title: `졸업요건1. 수업 및 학점 ${creditDist}`,
+                    pass: req1Pass,
+                    guide: links.credits,
+                    phones: [{ text: '기술교육과', num: '042-821-5691' }, { text: '교육대학원', num: '042-821-5252' }],
+                    items: [
+                        { text: `전체 ${trackInfo.total}학점 중 ${totalCredits}학점 이수`, pass: totalCredits >= trackInfo.total, type: 'total' },
+                        { text: `전공(일반/기본) ${trackInfo.major}학점 중 ${totalMajor}학점 이수`, pass: totalMajor >= trackInfo.major, type: 'major' },
+                        { text: `교직 ${trackInfo.edu}학점 중 ${totalEdu}학점 이수`, pass: totalEdu >= trackInfo.edu, type: 'edu' },
+                        ...(!isRetraining && !areasPass ? [{ text: "기본이수 및 교과교육 영역 미충족", pass: false }] : []),
+                        ...(hasDuplicate ? [{ text: "중복 선택된 과목 존재", pass: false }] : [])
+                    ]
+                },
+                {
+                    id: 2,
+                    title: "졸업요건2. 성인지교육",
+                    pass: checks.gender,
+                    guide: links.gender,
+                    items: [
+                        { text: "성인지교육 1차 이수", pass: document.getElementById('check-gender1').checked },
+                        { text: "성인지교육 2차 이수", pass: document.getElementById('check-gender2').checked }
+                    ]
+                },
+                {
+                    id: 3,
+                    title: "졸업요건3. 연구윤리",
+                    pass: checks.ethics,
+                    guide: links.ethics,
+                    items: [
+                        { text: "연구윤리 교육 이수", pass: checks.ethics }
+                    ]
+                },
+                {
+                    id: 4,
+                    title: "졸업요건4. 심폐소생술",
+                    pass: checks.cpr,
+                    guide: links.cpr,
+                    items: [
+                        { text: "심폐소생술 1회 (서로 다른 년도)", pass: document.getElementById('check-cpr1').checked },
+                        { text: "심폐소생술 2회 (서로 다른 년도)", pass: document.getElementById('check-cpr2').checked }
+                    ]
+                },
+                {
+                    id: 5,
+                    title: "졸업요건5. 교직 적성 및 인성 검사",
+                    pass: checks.apt,
+                    guide: links.apt,
+                    items: [
+                        { text: "적성 및 인성 검사 1회 적격", pass: document.getElementById('check-apt1').checked },
+                        { text: "적성 및 인성 검사 2회 적격", pass: document.getElementById('check-apt2').checked }
+                    ]
+                },
+                {
+                    id: 6,
+                    title: "졸업요건6. 종합시험 합격",
+                    pass: checks.exam,
+                    guide: links.exam,
+                    items: [
+                        { text: "교육학개론 합격", pass: document.getElementById('exam-edu').checked },
+                        { text: "기술교육론 합격", pass: document.getElementById('exam-tecedu').checked },
+                        { text: "건설기술 합격", pass: document.getElementById('exam-construct').checked },
+                        { text: "전기전자기술 합격", pass: document.getElementById('exam-elec').checked }
+                    ]
+                },
+                {
+                    id: 7,
+                    title: "졸업요건7. 교육봉사 및 교육실습",
+                    pass: checks.eduPractice,
+                    items: [
+                        { text: "교육봉사 이수 (60시간 또는 해당없음)", pass: document.getElementById('check-edu-service-na').checked || document.getElementById('check-edu-service-60').checked },
+                        { text: "교육실습 이수 (1회 또는 해당없음)", pass: document.getElementById('check-teaching-practice-na').checked || document.getElementById('check-teaching-practice-1').checked }
+                    ]
+                },
+                {
+                    id: 8,
+                    title: `졸업요건8. ${paperLabel}`,
+                    pass: paperDone,
+                    items: Array.from(document.querySelectorAll('#paper-checklist input')).map((input, idx) => {
+                        const labelEl = input.parentElement;
+                        const linkEl = labelEl.querySelector('a.guide-link');
+                        const linkHtml = linkEl ? ` <a href="${linkEl.href}" target="_blank" class="guide-link" style="padding: 2px 6px; font-size: 0.7rem; margin-left: 5px;" onclick="event.stopPropagation()">안내</a>` : '';
+
+                        // Extract just the text node content
+                        let text = "";
+                        for (let node of labelEl.childNodes) {
+                            if (node.nodeType === 3) text += node.textContent.trim();
+                        }
+
+                        return { text: text + linkHtml, pass: input.checked };
+                    })
+                }
+            ];
+
+            // Re-filter and re-number for the final dashboard view
+            const isYangseongResult = state.track.startsWith('yangseong');
+            const isMinorResult = state.track.startsWith('minor');
+
+            const finalRequirements = requirements.filter(r => {
+                // For Retraining: Hide 2(Gender), 4(CPR), 5(Aptitude), 7(Education Practice)
+                if (isRetraining) {
+                    if (r.id === 2 || r.id === 4 || r.id === 5 || r.id === 7) return false;
+                }
+
+                // For Minor: Hide 2(Gender), 4(CPR), 5(Aptitude) are shown, but 7(Education Practice) is hidden
+                if (isMinorResult && r.id === 7) {
+                    return false;
+                }
+
+                // For Yangseong: Show all requirements including 7(Education Practice)
+                return true;
+            }).map((r, idx) => {
+                const newId = idx + 1;
+                r.displayId = newId;
+                r.title = r.title.replace(/졸업요건\d+/, `졸업요건${newId}`);
+                return r;
+            });
+
+            // Additional check for Basic Areas inside Requirement 1 or a new hidden check
+            // Let's add area and essential missing info to the credit/area details
+            const areaRequirement = {
+                title: "추가: 기본이수 및 교과교육 영역",
+                items: [
+                    ...CONFIG.areas.map(a => ({ text: `기본이수 [${a.name}]`, pass: satisfiedAreas.has(a.id), color: '#059669' })),
+                    ...CONFIG.essentials.map(e => ({ text: `교과교육 [${e}]`, pass: uniqueCourses.has(e), color: '#2563eb' }))
+                ]
+            };
+
+            // Inject into UI
+            const container = document.getElementById('requirement-detailed-results');
+            container.innerHTML = finalRequirements.map(req => {
+                // Special rendering for Requirement 1 (Credits & Areas)
+                if (req.id === 1) {
+                    const totalPct = Math.min(100, (totalCredits / trackInfo.total) * 100);
+                    const majorPct = Math.min(100, (totalMajor / trackInfo.major) * 100);
+                    const eduPct = trackInfo.edu > 0 ? Math.min(100, (totalEdu / trackInfo.edu) * 100) : 100;
+
+                    return `
+                    <div class="requirement-card ${!req.pass ? 'open' : ''}" id="result-req-${req.displayId}" onclick="this.classList.toggle('open')">
+                        <div class="requirement-header">
+                            <div class="requirement-title">
+                                <i data-lucide="${req.pass ? 'check-circle' : 'alert-circle'}" 
+                                   class="${req.pass ? 'color-basic' : 'color-danger'}" style="width: 20px;"></i>
+                                <div style="display: flex; flex-direction: column;">
+                                    <span>${req.title}</span>
+                                    <div style="display: flex; gap: 8px;">
+                                        ${req.guide ? `<a href="${req.guide}" target="_blank" class="guide-link" style="margin-left:0; font-size: 0.75rem;"><i data-lucide="external-link" style="width:12px;height:12px;"></i> 안내</a>` : ''}
+                                        ${req.phones ? req.phones.map(p => `<a href="tel:${p.num}" class="guide-link" style="margin-left:0; font-size: 0.75rem;"><i data-lucide="phone" style="width:12px;height:12px;"></i> ${p.text}: ${p.num}</a>`).join('') : ''}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="requirement-status">
+                                <span class="status-pill ${req.pass ? 'status-pass' : 'status-fail'}">${req.pass ? '충족' : '미충족'}</span>
+                                <i data-lucide="chevron-down" class="chevron-icon" style="width: 18px;"></i>
+                            </div>
+                        </div>
+                        <div class="requirement-content" onclick="event.stopPropagation()">
+                            <div class="credit-summary-grid" style="margin-top: 1.5rem; ${trackInfo.edu === 0 ? 'grid-template-columns: repeat(2, 1fr);' : ''}">
+                                <!-- Total Credits -->
+                                <div class="credit-card highlight">
+                                    <span class="credit-card-label">전체 학점</span>
+                                    <div class="credit-card-value">${totalCredits} <span class="credit-card-target">/ ${trackInfo.total}</span></div>
+                                    <div class="credit-progress-bg">
+                                        <div class="credit-progress-bar" style="width: ${totalPct}%; background: var(--primary);"></div>
+                                    </div>
+                                </div>
+                                <!-- Major Credits -->
+                                <div class="credit-card">
+                                    <span class="credit-card-label">전공 학점</span>
+                                    <div class="credit-card-value">${totalMajor} <span class="credit-card-target">/ ${trackInfo.major}</span></div>
+                                    <div class="credit-progress-bg">
+                                        <div class="credit-progress-bar" style="width: ${majorPct}%; background: #059669;"></div>
+                                    </div>
+                                </div>
+                                <!-- Edu Credits -->
+                                ${trackInfo.edu > 0 ? `
+                                <div class="credit-card">
+                                    <span class="credit-card-label">교직 학점</span>
+                                    <div class="credit-card-value">${totalEdu} <span class="credit-card-target">/ ${trackInfo.edu}</span></div>
+                                    <div class="credit-progress-bg">
+                                        <div class="credit-progress-bar" style="width: ${eduPct}%; background: #7c3aed;"></div>
+                                    </div>
+                                </div>
+                                ` : ''}
+                            </div>
+
+                            ${(isYangseong || isMinor) ? `
+                            <div style="margin-bottom: 1.5rem;">
+                                <strong style="font-size: 0.85rem; display: block; margin-bottom: 0.75rem; color: var(--text-main);">기본이수 및 교과교육 영역 현황</strong>
+                                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px;">
+                                    ${areaRequirement.items.map(i => {
+                        const isBasic = i.text.includes('기본이수');
+                        const color = isBasic ? '#059669' : '#2563eb';
+                        return `
+                                        <div class="area-status-tile ${i.pass ? 'pass' : 'fail'}" style="${i.pass ? `color: ${color}; border-color: ${color}44;` : 'border: 2px solid var(--danger);'}">
+                                            <i data-lucide="${i.pass ? 'check-circle' : 'alert-circle'}" style="width: 14px; flex-shrink: 0;"></i>
+                                            <span style="color: ${i.pass ? color : 'var(--danger)'}; font-weight: 800; margin-right: 4px; white-space: nowrap; flex-shrink: 0;">${isBasic ? '기본' : '교과'}</span>
+                                            <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; ${!i.pass ? 'font-weight: 700;' : ''}">${i.text.replace(/기본이수 \[|\]|교과교육 \[/g, '')}${i.pass ? '' : ' ⚠️'}</span>
+                                        </div>
+                                    `}).join('')}
+                                </div>
+                            </div>
+                            ` : ''}
+
+                            ${hasDuplicate ? `
+                            <div class="missing-item" style="margin-top: 10px;">
+                                <i data-lucide="alert-triangle" style="width: 16px;"></i>
+                                <span>중복 선택된 과목이 존재합니다. 동일 과목은 중복 인정되지 않습니다.</span>
+                            </div>
+                            ` : ''}
+
+                            <div style="margin-top: 1.5rem; border-top: 1px solid #f1f5f9; padding-top: 1rem;">
+                                <button class="btn btn-secondary" style="width: 100%; justify-content: space-between; font-size: 0.85rem;" onclick="this.nextElementSibling.classList.toggle('hidden'); lucide.createIcons();">
+                                    <span>이수 과목 상세 사정 내역</span>
+                                    <i data-lucide="chevron-down"></i>
+                                </button>
+                                <div class="hidden" style="margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                                    
+                                    ${!isRetraining ? `
+                                    <!-- 전공 - 기본이수 영역 (Only for Non-Retraining) -->
+                                    <div style="padding: 1.25rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px;">
+                                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 1rem; color: #166534; border-bottom: 1px solid #dcfce7; padding-bottom: 0.5rem;">
+                                            <i data-lucide="book" style="width: 18px;"></i>
+                                            <h4 style="font-size: 0.95rem; font-weight: 700;">전공 - 기본이수 영역</h4>
+                                        </div>
+                                        
+                                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                            <!-- 이수 완료 -->
+                                            <div>
+                                                <div style="font-size: 0.8rem; font-weight: 700; color: #166534; margin-bottom: 0.5rem;">✅ 이수 완료</div>
+                                                <div style="display: flex; flex-direction: column; gap: 8px;">
+                                                    <div>
+                                                        <div style="font-size: 0.7rem; color: #166534; opacity: 0.8; margin-bottom: 4px;">이수 영역</div>
+                                                        <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                                                            ${CONFIG.areas.filter(a => satisfiedAreas.has(a.id)).map(a => `<span style="font-size: 0.7rem; background: white; padding: 2px 6px; border-radius: 4px; border: 1px solid #bbf7d0; color: #166534;">${a.name}</span>`).join('')}
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div style="font-size: 0.7rem; color: #166534; opacity: 0.8; margin-bottom: 4px;">이수 과목</div>
+                                                        <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                                                            ${Array.from(uniqueCourses).filter(c => CONFIG.basic_areas.includes(c)).map(c => `<span style="font-size: 0.7rem; background: #dcfce7; padding: 2px 6px; border-radius: 4px; color: #14532d; font-weight: 600;">${c}</span>`).join('')}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- 미이수 -->
+                                            <div>
+                                                <div style="font-size: 0.85rem; font-weight: 800; color: #dc2626; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 4px;">
+                                                    <i data-lucide="alert-triangle" style="width: 16px;"></i>
+                                                    미이수 현황
+                                                </div>
+                                                <div style="display: flex; flex-direction: column; gap: 12px;">
+                                                    <div>
+                                                        <div style="font-size: 0.75rem; color: #991b1b; font-weight: 700; margin-bottom: 6px;">🚩 미이수 영역</div>
+                                                        <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                                                            ${CONFIG.areas.filter(a => !satisfiedAreas.has(a.id)).map(a => `<span style="font-size: 0.85rem; background: #fee2e2; padding: 4px 10px; border-radius: 6px; border: 1.5px solid #ef4444; color: #b91c1c; font-weight: 800;">${a.name}</span>`).join('')}
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div style="font-size: 0.75rem; color: #991b1b; font-weight: 700; margin-bottom: 6px;">💡 미이수 과목 (추천)</div>
+                                                        <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                                                            ${CONFIG.areas.filter(a => !satisfiedAreas.has(a.id)).map(a => {
+                            let recommend = a.subjects[0];
+                            if (a.name === '통신 및 전기전자') recommend = '정보통신기술(or 전기전자기술)';
+                            if (a.name === '수송 및 동력') recommend = '수송기술(or 동력 및 에너지기술)';
+                            return `<span style="font-size: 0.8rem; background: #fff7ed; padding: 4px 10px; border-radius: 6px; border: 1px dashed #f97316; color: #c2410c; font-weight: 600;">${recommend}</span>`;
+                        }).join('')}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 교과교육 영역 (Only for Non-Retraining) -->
+                                    <div style="padding: 1.25rem; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px;">
+                                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 1rem; color: #1e40af; border-bottom: 1px solid #dbeafe; padding-bottom: 0.5rem;">
+                                            <i data-lucide="layers" style="width: 18px;"></i>
+                                            <h4 style="font-size: 0.95rem; font-weight: 700;">교과교육 영역</h4>
+                                        </div>
+                                        
+                                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                            <div>
+                                                <div style="font-size: 0.8rem; font-weight: 700; color: #1e40af; margin-bottom: 0.5rem;">✅ 이수 완료</div>
+                                                <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                                                    ${CONFIG.essentials.filter(e => uniqueCourses.has(e)).map(e => `<span style="font-size: 0.7rem; background: white; padding: 2px 6px; border-radius: 4px; border: 1px solid #bfdbfe; color: #1e40af; font-weight: 600;">${e}</span>`).join('')}
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div style="font-size: 0.85rem; font-weight: 800; color: #dc2626; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 4px;">
+                                                    <i data-lucide="alert-circle" style="width: 16px;"></i>
+                                                    미이수 과목
+                                                </div>
+                                                <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                                                    ${CONFIG.essentials.filter(e => !uniqueCourses.has(e)).map(e => `<span style="font-size: 0.85rem; background: #fee2e2; padding: 4px 10px; border-radius: 6px; border: 1.5px solid #ef4444; color: #b91c1c; font-weight: 800;">${e}</span>`).join('')}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 일반 전공 (Shown for Non-Retraining) -->
+                                    <div style="padding: 1.25rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px;">
+                                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 0.5rem; color: #475569;">
+                                            <i data-lucide="list" style="width: 16px;"></i>
+                                            <h4 style="font-size: 0.85rem; font-weight: 700;">일반전공 이수 완료 과목</h4>
+                                        </div>
+                                        <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                                            ${Array.from(uniqueCourses).filter(c => CONFIG.major_subjects.includes(c) && !CONFIG.basic_areas.includes(c) && !CONFIG.essentials.includes(c)).map(c => `<span style="font-size: 0.7rem; background: white; padding: 2px 6px; border-radius: 4px; border: 1px solid #e2e8f0; color: #64748b;">${c}</span>`).join('')}
+                                        </div>
+                                    </div>
+
+                                    <!-- 교직 과목 (Shown for Non-Retraining if edu > 0) -->
+                                    ${trackInfo.edu > 0 ? `
+                                    <div style="padding: 1.25rem; background: #f5f3ff; border: 1px solid #ddd6fe; border-radius: 12px;">
+                                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 0.5rem; color: #5b21b6;">
+                                            <i data-lucide="user-check" style="width: 16px;"></i>
+                                            <h4 style="font-size: 0.85rem; font-weight: 700;">교직 이수 완료 과목</h4>
+                                        </div>
+                                        <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                                            ${Array.from(uniqueCourses).filter(c => CONFIG.edu_subjects.includes(c)).map(c => `<span style="font-size: 0.7rem; background: white; padding: 2px 6px; border-radius: 4px; border: 1px solid #ddd6fe; color: #5b21b6;">${c}</span>`).join('')}
+                                        </div>
+                                    </div>
+                                    ` : ''}
+                                    
+                                    ` : `
+                                    <!-- Simplified list for Retraining Tracks -->
+                                    <div style="padding: 1.25rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px;">
+                                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 1rem; color: #475569; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem;">
+                                            <i data-lucide="book" style="width: 18px;"></i>
+                                            <h4 style="font-size: 0.95rem; font-weight: 700;">전공 이수 과목 내역</h4>
+                                        </div>
+                                        <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                                            ${Array.from(uniqueCourses).filter(c => !CONFIG.edu_subjects.includes(c)).map(c => `<span style="font-size: 0.75rem; background: white; padding: 4px 10px; border-radius: 8px; border: 1px solid #bfdbfe; color: #1e40af; font-weight: 600;">${c}</span>`).join('')}
+                                        </div>
+                                    </div>
+
+                                    ${trackInfo.edu > 0 ? `
+                                    <div style="padding: 1.25rem; background: #f5f3ff; border: 1px solid #ddd6fe; border-radius: 12px;">
+                                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 1rem; color: #5b21b6; border-bottom: 1px solid #ede9fe; padding-bottom: 0.5rem;">
+                                            <i data-lucide="layers" style="width: 18px;"></i>
+                                            <h4 style="font-size: 0.95rem; font-weight: 700;">교직 이수 과목 내역</h4>
+                                        </div>
+                                        <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                                            ${Array.from(uniqueCourses).filter(c => CONFIG.edu_subjects.includes(c)).map(c => `<span style="font-size: 0.75rem; background: white; padding: 4px 10px; border-radius: 8px; border: 1px solid #ddd6fe; color: #5b21b6; font-weight: 600;">${c}</span>`).join('')}
+                                        </div>
+                                    </div>
+                                    ` : ''}
+                                    `}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+                }
+
+                // Default rendering for other requirements
+                return `
+                <div class="requirement-card ${!req.pass ? 'open' : ''}" id="result-req-${req.displayId}" onclick="this.classList.toggle('open')">
+                    <div class="requirement-header">
+                        <div class="requirement-title">
+                            <i data-lucide="${req.pass ? 'check-circle' : 'alert-circle'}" 
+                               class="${req.pass ? 'color-basic' : 'color-danger'}" style="width: 20px;"></i>
+                            <div style="display: flex; flex-direction: column;">
+                                <span>${req.title}</span>
+                                <div style="display: flex; gap: 8px;">
+                                    ${req.guide ? `<a href="${req.guide}" target="_blank" class="guide-link" style="margin-left:0; font-size: 0.75rem;"><i data-lucide="external-link" style="width:12px;height:12px;"></i> 안내</a>` : ''}
+                                    ${req.phones ? req.phones.map(p => `<a href="tel:${p.num}" class="guide-link" style="margin-left:0; font-size: 0.75rem;"><i data-lucide="phone" style="width:12px;height:12px;"></i> ${p.text}: ${p.num}</a>`).join('') : ''}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="requirement-status">
+                            <span class="status-pill ${req.pass ? 'status-pass' : 'status-fail'}">${req.pass ? '충족' : '미충족'}</span>
+                            <i data-lucide="chevron-down" class="chevron-icon" style="width: 18px;"></i>
+                        </div>
+                    </div>
+                    <div class="requirement-content" onclick="event.stopPropagation()">
+                        <div class="missing-list">
+                            ${req.items.map(item => `
+                                <div class="${item.pass ? 'pass-item' : 'missing-item'}">
+                                    <i data-lucide="${item.pass ? 'check' : 'x'}" style="width: 14px; margin-top: 3px;"></i>
+                                    <span>${item.text} ${item.pass ? '(완료)' : '(미이수/미완료)'}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+            }).join('');
+
+            const finalStatus = document.getElementById('final-status');
+            if (creditPass && areasPass && extraPass) {
+                finalStatus.innerText = '축하합니다! 졸업이 가능합니다. 🎉';
+                finalStatus.className = 'grad-possible';
+                confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+            } else {
+                const unmet = finalRequirements.filter(r => !r.pass);
+                const unmetLinks = unmet.map(r => `<span style="cursor:pointer; text-decoration:underline; font-weight:700; color:#ef4444; white-space: nowrap;" onclick="scrollToRequirement(${r.displayId})">졸업요건${r.displayId} 미충족</span>`).join('<span style="color:#cbd5e1; margin: 0 8px;">|</span>');
+
+                finalStatus.innerHTML = `
+                    <div style="margin-bottom: 12px;">졸업 요건 미충족</div>
+                    <div style="font-size: 0.95rem; background: rgba(255,255,255,0.5); padding: 12px; border-radius: 12px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; line-height: 1.8;">
+                        ${unmetLinks}
+                    </div>
+                `;
+                finalStatus.className = 'grad-impossible';
+            }
+
+            // Global scroll function
+            window.scrollToRequirement = function (id) {
+                const el = document.getElementById(`result-req-${id}`);
+                if (el) {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    // Highlight the card briefly
+                    el.style.boxShadow = '0 0 20px rgba(239, 68, 68, 0.4)';
+                    setTimeout(() => {
+                        el.style.boxShadow = '';
+                    }, 2000);
+                    // Open it if closed
+                    if (!el.classList.contains('open')) {
+                        el.classList.add('open');
+                    }
+                }
+            };
+
+            lucide.createIcons();
+        }
+
+        function handleSequentialCheck(el, targetId) {
+            if (el.checked) {
+                const target = document.getElementById(targetId);
+                if (target) target.checked = true;
+            }
+            saveData();
+        }
+
+        function handlePaperStepChange(el) {
+            const stepId = parseInt(el.getAttribute('data-step-id'));
+            const isChecked = el.checked;
+            const maxStep = document.querySelectorAll('.paper-step-check').length;
+
+            if (isChecked) {
+                // Check all PREVIOUS steps
+                for (let i = 1; i < stepId; i++) {
+                    const step = document.getElementById(`paper-step${i}`);
+                    if (step) step.checked = true;
+                }
+            } else {
+                // Uncheck all SUBSEQUENT steps
+                for (let i = stepId + 1; i <= 20; i++) { // Max usually 12
+                    const step = document.getElementById(`paper-step${i}`);
+                    if (step) step.checked = false;
+                    else break;
+                }
+            }
+            saveData();
+        }
+
+        function handleExclusion(el, targetId, targetLabelId) {
+            const target = document.getElementById(targetId);
+            const targetLabel = document.getElementById(targetLabelId);
+
+            if (el.checked) {
+                if (target) {
+                    target.checked = false;
+                    target.disabled = true;
+                }
+                if (targetLabel) targetLabel.classList.add('disabled-excluded');
+            } else {
+                if (target) target.disabled = false;
+                if (targetLabel) targetLabel.classList.remove('disabled-excluded');
+            }
+            saveData();
+        }
+
+        // Initialize
+        lucide.createIcons();
+    </script>
 
 </body>
 
