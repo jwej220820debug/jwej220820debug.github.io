@@ -1671,6 +1671,9 @@
             }
 
             // Step specific initializations
+            if (step === 1) {
+                initStep1();
+            }
             if (step === 2) {
                 initStep2();
                 loadData();
@@ -1733,7 +1736,51 @@
             document.getElementById(`step-${step}`).classList.remove('hidden');
             document.getElementById(`step-cont-${step}`).classList.add('active');
             window.scrollTo(0, 0);
+            lucide.createIcons();
             return true;
+        }
+
+        function initStep1() {
+            const sidInput = document.getElementById('student-id');
+            const nameInput = document.getElementById('student-name');
+            if (sidInput && state.studentId) sidInput.value = state.studentId;
+            if (nameInput && state.name) nameInput.value = state.name;
+
+            if (state.track) {
+                let group = '';
+                if (state.track.startsWith('yangseong')) group = 'yangseong';
+                else if (state.track.startsWith('minor')) group = 'minor';
+                else if (state.track.startsWith('retraining')) group = 'retraining';
+
+                if (group) {
+                    // Show corresponding button as primary
+                    document.querySelectorAll('.category-btn').forEach(btn => {
+                        btn.classList.remove('btn-primary');
+                        btn.classList.add('btn-secondary');
+                    });
+                    const catBtn = document.getElementById(`cat-${group}`);
+                    if (catBtn) {
+                        catBtn.classList.remove('btn-secondary');
+                        catBtn.classList.add('btn-primary');
+                    }
+
+                    // Show sub-tracks group
+                    document.querySelectorAll('.track-group').forEach(g => g.classList.add('hidden'));
+                    const groupEl = document.getElementById(`group-${group}`);
+                    if (groupEl) groupEl.classList.remove('hidden');
+
+                    // Visually select radio box
+                    document.querySelectorAll('.radio-box').forEach(box => {
+                        if (box.getAttribute('data-track') === state.track) {
+                            box.classList.add('selected');
+                        } else {
+                            box.classList.remove('selected');
+                        }
+                    });
+                    const selTrackInput = document.getElementById('selected-track');
+                    if (selTrackInput) selTrackInput.value = state.track;
+                }
+            }
         }
 
         function initStep2() {
